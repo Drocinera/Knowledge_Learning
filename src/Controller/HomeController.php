@@ -15,4 +15,13 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
+    public function DropdownFormation()
+    {
+        $formations = $this->getDoctrine()->getRepository(Formation::class)->findAll();
+
+        return $this->render('base.html.twig', [
+            'formations' => $formations,
+        ]);
+    }
+
 }

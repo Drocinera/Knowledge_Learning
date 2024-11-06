@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Information légal{% endblock %}
+
+{% block body %}
+<div class="Legal-information">
+    <div>
+        <h1> Informations légales du site</h1>
+    </div>
+    <div class="légal-information-btn">
+        <div>
+            <a href="{{ path('app_legal_notice') }}"> Mentions légal </a>
+        </div>
+        <div>
+            <a href="{{ path('app_privacy_policy') }}"> Politique de confidentialité </a>
+        </div>
+        <div>
+            <a href="{{ path('app_condition_use') }}"> Condtition d'utilisation </a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

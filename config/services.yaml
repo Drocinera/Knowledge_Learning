@@ -6,6 +6,11 @@
 parameters:
 
 services:
+    App\EventSubscriber\EntitySubscriber:
+        arguments:
+            $security: '@security.helper'
+        tags:
+            - { name: doctrine.event_subscriber }
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
