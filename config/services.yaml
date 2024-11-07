@@ -11,6 +11,12 @@ services:
             $security: '@security.helper'
         tags:
             - { name: doctrine.event_subscriber }
+    App\EventSubscriber\FormationsSubscriber:
+        arguments:
+            $formationRepository: '@App\Repository\FormationRepository'
+            $twig: '@twig'
+        tags:
+            - { name: 'kernel.event_subscriber' }
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

@@ -16,6 +16,11 @@ class ThemesRepository extends ServiceEntityRepository
         parent::__construct($registry, Themes::class);
     }
 
+    public function findAllFormations()
+    {
+        return $this->findAll();
+    }
+
     //    /**
     //     * @return Themes[] Returns an array of Themes objects
     //     */

@@ -5,3 +5,8 @@ body {
 * {
     font-family: 'Comic sans MS';
 }
+
+.logo {
+    width: 15.6em;
+    padding: 1em;
+}

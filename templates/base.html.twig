@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>{% block title %}Knowledge-Learning{% endblock %}</title>
+
+    <link rel="icon" href="{{ asset('Images/Favicon_Knowledge_Learning.png') }}" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="{{ asset('Images/Favicon_Knowledge_Learning.png') }}">
+
     <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
     <link rel="stylesheet" href="{{ asset('styles/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('styles/home.css') }}">
@@ -18,61 +23,63 @@
     
 </head>
 <body>
-    <nav>
-        <div class="nav-left">
-            <a href="{{ path('home') }}">
-                <img src="{{ asset('images/Logo.jpg') }}" alt="Logo" class="logo">
-            </a>
-        </div>
-        <div class="header-nav-right">
-            {% if app.user %}
-                <!-- User is connected -->
-                <a href="{{ path('home') }}" class="{% if app.request.get('_route') == 'home' %}active{% endif %}">
-                Accueil
+    <header>
+        <nav>
+            <div class="nav-left">
+                <a href="{{ path('app_home') }}">
+                    <img src="{{ asset('images/Logo.jpg') }}" alt="Logo" class="logo">
                 </a>
-
-            <!-- Menu Formations avec sous-menu déroulant -->
-            <div class="dropdown">
-                <a href="{{ path('app_formation') }}" class="{% if app.request.get('_route') == 'app_formation' %}active{% endif %}">
-                    Formations
-                </a>
-                <ul class="dropdown-content">
-                    {% for formation in formations %}
-                        <li><a href="{{ path('app_formation_show', { id: formation.id }) }}">{{ formation.name }}</a></li>
-                    {% endfor %}
-                </ul>
             </div>
-            
-                <a href="{{ path('app_logout') }}">
-                    Se déconnecter
-                </a>
-            {% else %}
-                <!-- User is not connected -->
-                <a href="{{ path('home') }}" class="{% if app.request.get('_route') == 'home' %}active{% endif %}">
+            <div class="header-nav-right">
+                {% if app.user %}
+                    <!-- User is connected -->
+                    <a href="{{ path('app_home') }}" class="{% if app.request.get('_route') == 'home' %}active{% endif %}">
                     Accueil
-                </a>
+                    </a>
 
-            <!-- Menu Formations avec sous-menu déroulant -->
-            <div class="dropdown">
-                <a href="{{ path('app_formation') }}" class="{% if app.request.get('_route') == 'app_formation' %}active{% endif %}">
-                    Formations
-                </a>
-                <ul class="dropdown-content">
-                    {% for formation in formations %}
-                        <li><a href="{{ path('app_formation_show', { id: formation.id }) }}">{{ formation.name }}</a></li>
-                    {% endfor %}
-                </ul>
+                <!-- Menu Formations avec sous-menu déroulant -->
+                <div class="dropdown">
+                    <a href="{{ path('app_formation') }}" class="{% if app.request.get('_route') == 'app_formation' %}active{% endif %}">
+                        Formations
+                    </a>
+                    <ul class="dropdown-content">
+                        {% for formation in formations %}
+                            <li><a href="{{ path('app_formation_show', { id: formation.id }) }}">{{ formation.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                    <a href="{{ path('app_logout') }}">
+                        Se déconnecter
+                    </a>
+                {% else %}
+                    <!-- User is not connected -->
+                    <a href="{{ path('app_home') }}" class="{% if app.request.get('_route') == 'home' %}active{% endif %}">
+                        Accueil
+                    </a>
+
+                <!-- Menu Formations avec sous-menu déroulant -->
+                <div class="dropdown">
+                    <a href="{{ path('app_formation') }}" class="{% if app.request.get('_route') == 'app_formation' %}active{% endif %}">
+                        Formations
+                    </a>
+                    <ul class="dropdown-content">
+                        {% for formation in formations %}
+                            <li><a href="{{ path('app_formation_show', { id: formation.id }) }}">{{ formation.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                    <a href="{{ path('app_register') }}" class="{% if app.request.get('_route') == 'app_register' %}active{% endif %}">
+                        S'inscrire
+                    </a>
+                    <a href="{{ path('app_login') }}" class="{% if app.request.get('_route') == 'app_login' %}active{% endif %}">
+                        Se connecter
+                    </a>
+                {% endif %}
             </div>
-
-                <a href="{{ path('app_register') }}" class="{% if app.request.get('_route') == 'app_register' %}active{% endif %}">
-                    S'inscrire
-                </a>
-                <a href="{{ path('app_login') }}" class="{% if app.request.get('_route') == 'app_login' %}active{% endif %}">
-                    Se connecter
-                </a>
-            {% endif %}
-        </div>
-    </nav>
+        </nav>
+    </header>
 
     <div class="container">
         {% block body %}{% endblock %}
@@ -81,7 +88,7 @@
     <footer>
     <nav>
         <div class="nav-left">
-            <a href="{{ path('home') }}">
+            <a href="{{ path('app_home') }}">
                 <img src="{{ asset('images/Logo.jpg') }}" alt="Logo" class="logo">
             </a>
         </div>
@@ -102,3 +109,5 @@
     </footer>
 </body>
 </html>
+
+(faire la mise en page header, footer et home)
