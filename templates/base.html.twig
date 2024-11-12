@@ -8,7 +8,7 @@
 
     <link rel="icon" href="{{ asset('Images/Favicon_Knowledge_Learning.png') }}" sizes="32x32" type="image/png">
     <link rel="apple-touch-icon" href="{{ asset('Images/Favicon_Knowledge_Learning.png') }}">
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
@@ -36,7 +36,7 @@
             <div class="header-nav-right">
                 {% if app.user %}
                     <!-- User is connected -->
-                    <a href="{{ path('app_home') }}" class="{% if app.request.get('_route') == 'home' %}active{% endif %}">
+                    <a href="{{ path('app_home') }}" class="{% if app.request.get('_route') == 'app_home' %}active{% endif %}">
                     Accueil
                     </a>
 
@@ -57,7 +57,7 @@
                     </a>
                 {% else %}
                     <!-- User is not connected -->
-                    <a href="{{ path('app_home') }}" class="{% if app.request.get('_route') == 'home' %}active{% endif %}">
+                    <a href="{{ path('app_home') }}" class="{% if app.request.get('_route') == 'app_home' %}active{% endif %}">
                         Accueil
                     </a>
 
@@ -96,16 +96,16 @@
                 </a>
             </div>
             <div class="footer-nav-right">
-                <a href="{{ path('app_contact') }}" class="{% if app.request.get('_route') == 'app_products' %}active{% endif %}">
+                <a href="{{ path('app_contact') }}" class="{% if app.request.get('_route') == 'app_contact' %}active{% endif %}">
                     Nous contacter
                 </a>
-                <a href="{{ path('app_formation') }}" class="{% if app.request.get('_route') == 'app_products' %}active{% endif %}">
+                <a href="{{ path('app_formation') }}" class="{% if app.request.get('_route') == 'app_formation' %}active{% endif %}">
                     Nos Formations
                 </a>
-                <a href="{{ path('app_site_map') }}" class="{% if app.request.get('_route') == 'app_products' %}active{% endif %}">
+                <a href="{{ path('app_site_map') }}" class="{% if app.request.get('_route') == 'app_site_map' %}active{% endif %}">
                     Plan du site
                 </a>
-                <a href="{{ path('app_legal_information') }}" class="{% if app.request.get('_route') == 'app_products' %}active{% endif %}">
+                <a href="{{ path('app_legal_information') }}" class="{% if app.request.get('_route') == 'app_legal_information' %}active{% endif %}">
                     Information légal
                 </a>
             </div>
