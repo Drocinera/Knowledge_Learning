@@ -1,9 +1,25 @@
 body {
-    background-color: skyblue;
+    background-color: #f1f8fc ;
+    margin: auto;
 }
 
 * {
     font-family: 'Comic sans MS';
+}
+
+h2, h3, h4, h5 {
+    background-color: #00497c;
+    display: flex;
+    justify-content: center;
+    color: #f1f8fc;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+    background-color: #00497c;
+    color: #f1f8fc;
+    margin-top: -0em;
 }
 
 .logo {

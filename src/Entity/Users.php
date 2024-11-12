@@ -50,6 +50,11 @@ class Users implements UserInterface
         return $this->email;
     }
 
+    public function getEmail(): ?string
+{
+    return $this->email;
+}
+
     public function getRoles(): array
     {
         return [$this->role ? $this->role->getName() : 'ROLE_USER'];

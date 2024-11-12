@@ -8,6 +8,8 @@
 
     <link rel="icon" href="{{ asset('Images/Favicon_Knowledge_Learning.png') }}" sizes="32x32" type="image/png">
     <link rel="apple-touch-icon" href="{{ asset('Images/Favicon_Knowledge_Learning.png') }}">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
     <link rel="stylesheet" href="{{ asset('styles/admin.css') }}">
@@ -19,12 +21,13 @@
     <link rel="stylesheet" href="{{ asset('styles/lesson.css') }}">
     <link rel="stylesheet" href="{{ asset('styles/registration.css') }}">
     <link rel="stylesheet" href="{{ asset('styles/footer.css') }}">
-     <link rel="stylesheet" href="{{ asset('styles/formation.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/formation.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/contact.css') }}">
     
 </head>
 <body>
     <header>
-        <nav>
+        <nav class="header-nav">
             <div class="nav-left">
                 <a href="{{ path('app_home') }}">
                     <img src="{{ asset('images/Logo.jpg') }}" alt="Logo" class="logo">
@@ -86,28 +89,27 @@
     </div>
 
     <footer>
-    <nav>
-        <div class="nav-left">
-            <a href="{{ path('app_home') }}">
-                <img src="{{ asset('images/Logo.jpg') }}" alt="Logo" class="logo">
-            </a>
-        </div>
-        <div class="nav-right">
-             <a href="{{ path('app_contact') }}" class="{% if app.request.get('_route') == 'app_products' %}active{% endif %}">
-                Nous contacter
-            </a>
-            <a href="{{ path('app_formation') }}" class="{% if app.request.get('_route') == 'app_products' %}active{% endif %}">
-                Nos Formations
-            </a>
-            <a href="{{ path('app_site_map') }}" class="{% if app.request.get('_route') == 'app_products' %}active{% endif %}">
-                Plan du site
-            </a>
-            <a href="{{ path('app_legal_information') }}" class="{% if app.request.get('_route') == 'app_products' %}active{% endif %}">
-                Information légal
-            </a>
-        </div>
+        <nav class="footer-nav">
+            <div class="footer-nav-left">
+                <a href="{{ path('app_home') }}">
+                    <img src="{{ asset('images/Logo.jpg') }}" alt="Logo" class="logo">
+                </a>
+            </div>
+            <div class="footer-nav-right">
+                <a href="{{ path('app_contact') }}" class="{% if app.request.get('_route') == 'app_products' %}active{% endif %}">
+                    Nous contacter
+                </a>
+                <a href="{{ path('app_formation') }}" class="{% if app.request.get('_route') == 'app_products' %}active{% endif %}">
+                    Nos Formations
+                </a>
+                <a href="{{ path('app_site_map') }}" class="{% if app.request.get('_route') == 'app_products' %}active{% endif %}">
+                    Plan du site
+                </a>
+                <a href="{{ path('app_legal_information') }}" class="{% if app.request.get('_route') == 'app_products' %}active{% endif %}">
+                    Information légal
+                </a>
+            </div>
+        </nav>
     </footer>
 </body>
 </html>
-
-(faire la mise en page header, footer et home)

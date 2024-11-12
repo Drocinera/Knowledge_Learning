@@ -21,8 +21,23 @@
         <h2> Formations Disponibles </h2>
     </div>
 
-    <div class="Content-formation">
-            Ici mettre la boucle pour les formations comme l'autre projet
-    </div>
+        <div class="formation-grid">
+            {% for formation in formations %}
+                <div class="formation-card">
+                    <div class="formation-image">
+                        <img src="{{ asset('images/' ~ formation.image) }}" alt="{{ formation.name }}">
+                    </div>
+                    <div class="formation-details">
+                        <h3>{{ formation.name }}</h3>
+                        <div class="formation-action">
+                                <a href="{{ path('app_formation_show', {id: formation.id}) }}" class="btn">Voir la formation</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p>Aucun produit mis en avant pour l'instant.</p>
+            {% endfor %}
+        </div>
 </div>
 {% endblock %}
+

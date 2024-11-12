@@ -2,6 +2,44 @@ header {
     background-color: #0074c7;
 }
 
+.header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 10px 20px;
+}
+
+.nav-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.nav-left .logo {
+    width: 10em;
+}
+
+.header-nav-right {
+    display: flex;
+    gap: 15px;
+}
+
+.header-nav-right a {
+    text-decoration: none;
+    font-weight: normal;
+    color: #f1f8fc;
+}
+
+.header-nav-right a.active {
+    font-weight: bold; 
+    text-decoration: underline;
+    color: red;
+}
+
+.header-nav-right a:hover {
+    text-decoration: underline;
+}
+
 /* Styles pour le dropdown */
 .dropdown {
     position: relative;
