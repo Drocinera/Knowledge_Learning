@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Users;
+use App\Entity\Role;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,6 +38,18 @@ class RegistrationController extends AbstractController
             // encode the plain password
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
+            // Récupérer le rôle ROLE_USER depuis la base de données
+            $roleRepository = $entityManager->getRepository(Role::class);
+            $role = $roleRepository->findOneBy(['name' => 'ROLE_USER']); // ou 'ROLE_ADMIN' selon votre logique
+
+            if ($role) {
+                $user->setRole($role); // Assigner le rôle à l'utilisateur
+            } else {
+                // Si le rôle n'existe pas dans la base de données, vous pouvez gérer l'erreur ou en créer un
+                throw new \Exception("Role not found");
+            }
+
+            // Sauvegarder l'utilisateur avec le rôle
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -55,7 +68,7 @@ class RegistrationController extends AbstractController
         }
 
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form,
+            'registrationForm' => $form->createView(),
         ]);
     }
 
@@ -72,11 +85,11 @@ class RegistrationController extends AbstractController
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_login');
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Votre adress email a bien été vérifiée.');
+        $this->addFlash('success', 'Votre adresse email a bien été vérifiée.');
 
         return $this->redirectToRoute('app_register');
     }

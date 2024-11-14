@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\EqualTo;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -21,11 +21,12 @@ class RegistrationFormType extends AbstractType
             ->add('email', null, [
                 'label_attr' => ['class' => 'form-label'],
             ])
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
+            ->add('plainPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
+                'first_options'  => ['label' => 'Mot de passe'],
+                'second_options' => ['label' => 'Confirmation du mot de passe'],
                 'label_attr' => ['class' => 'form-label'],
                 'constraints' => [
                     new NotBlank([
@@ -34,23 +35,7 @@ class RegistrationFormType extends AbstractType
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Votre mot de passe doit contenir au minimum {{ limit }} caractères',
-                        // max length allowed by Symfony for security reasons
                         'max' => 4096,
-                    ]),
-                ],
-            ])
-            ->add('plainPasswordConfirmation', PasswordType::class, [
-                'label' => 'Confirmation du mot de passe',
-                'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
-                'label_attr' => ['class' => 'form-label'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez confirmer votre mot de passe',
-                    ]),
-                    new EqualTo([
-                        'propertyPath' => 'plainPassword',
-                        'message' => 'Les mots de passe ne correspondent pas',
                     ]),
                 ],
             ])
@@ -70,6 +55,8 @@ class RegistrationFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Users::class,
+            'allow_extra_fields' => true,
         ]);
     }
 }
+

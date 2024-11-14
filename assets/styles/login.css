@@ -1,0 +1,22 @@
+.login-form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: center;
+    font-weight: 400;
+    line-height: 2.4rem;
+    margin-bottom: 2rem;
+}
+
+.label-login {
+    padding-bottom: 1em;
+    padding-top: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control {
+    width: auto;
+    border: 1px solid;
+}

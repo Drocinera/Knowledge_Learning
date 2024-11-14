@@ -6,10 +6,12 @@ use App\Repository\UsersRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class Users implements UserInterface
+#[ORM\HasLifecycleCallbacks]
+class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -26,8 +28,8 @@ class Users implements UserInterface
     #[ORM\JoinColumn(nullable: false)]
     private ?Role $role = null;
 
-    #[ORM\Column]
-    private ?bool $is_active = null;
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private ?bool $is_active = false;
 
     #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeImmutable $created_at = null;
@@ -44,6 +46,12 @@ class Users implements UserInterface
     #[ORM\Column]
     private bool $isVerified = false;
 
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     // Getter pour l'identifiant unique (email)
     public function getUserIdentifier(): string
     {
@@ -51,18 +59,37 @@ class Users implements UserInterface
     }
 
     public function getEmail(): ?string
-{
-    return $this->email;
-}
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): self
+    {
+        $this->email = $email;
+
+            return $this;
+    }
 
     public function getRoles(): array
     {
         return [$this->role ? $this->role->getName() : 'ROLE_USER'];
     }
 
+    public function setRole(Role $role): self
+    {
+        $this->role = $role;
+        return $this;
+    }
+
     public function getPassword(): ?string
     {
         return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
+        return $this;
     }
 
     public function getSalt(): ?string
@@ -146,5 +173,27 @@ class Users implements UserInterface
         $this->isVerified = $isVerified;
 
         return $this;
+    }
+
+        // Callback PrePersist pour définir 'created_by' avant la persistance
+        #[ORM\PrePersist]
+        public function prePersist(): void
+        {
+            if (null === $this->created_by) {
+                $this->created_by = (string) $this->getId(); // Utiliser l'ID de l'utilisateur une fois qu'il est généré
+            }
+
+            if (null === $this->updated_by) {
+                $this->updated_by = (string) $this->getId(); // Utiliser l'ID de l'utilisateur une fois qu'il est généré
+            }
+
+            if (null === $this->created_at) {
+                $this->created_at = new \DateTimeImmutable();
+
+            if (null === $this->updated_at) {
+                $this->updated_at = new \DateTimeImmutable();
+
+            }
+        }
     }
 }
