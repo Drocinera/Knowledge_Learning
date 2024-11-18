@@ -68,5 +68,14 @@
 }
 
 .lesson-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding-top: 1em;
+    padding-bottom: 1em;
 }
+
+.course-buy-button {
+    text-align: center;
+}
+

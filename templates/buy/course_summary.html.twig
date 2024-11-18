@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Récapitulatif d'achat{% endblock %}
+
+{% block body %}
+<div>
+    <div class="summury-courses-buy">     
+        <h1>Achat du cursus : {{ course.name }}</h1>
+        <p>Prix : {{ course.price }} €</p>
+    </div> 
+    <div class="summury-lesson-buy"> 
+        <h2>Leçons incluses :</h2>
+        <ul class="summury-list-lesson">
+            {% for lesson in course.lessons %}
+                <li>{{ lesson.name }}</li>
+            {% endfor %}
+        </ul>
+    </div> 
+        <div  class="buy-button-summury">
+            <a href="{{ path('app_stripe_checkout', { type: 'course', id: course.id }) }}" class="btn btn-success">Confirmer et payer</a>
+        </div>
+        <div>
+            <a href="{{ path('app_formation') }}" class="btn btn-primary">Retour aux formations</a>
+        <div>
+    </div> 
+</div> 
+{% endblock %}

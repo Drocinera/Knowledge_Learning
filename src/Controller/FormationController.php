@@ -38,4 +38,33 @@ class FormationController extends AbstractController
             'courses' => $courses,
         ]);
     }
+
+    #[Route('/buy/course/{id}/summary', name: 'app_buy_course_summary')]
+public function buyCourseSummary(int $id, CoursesRepository $coursesRepository): Response
+{
+    $course = $coursesRepository->find($id);
+
+    if (!$course) {
+        throw $this->createNotFoundException('Cursus introuvable.');
+    }
+
+    return $this->render('buy/course_summary.html.twig', [
+        'course' => $course,
+    ]);
+}
+
+#[Route('/buy/lesson/{id}/summary', name: 'app_buy_lesson_summary')]
+public function buyLessonSummary(int $id, LessonsRepository $lessonsRepository): Response
+{
+    $lesson = $lessonsRepository->find($id);
+
+    if (!$lesson) {
+        throw $this->createNotFoundException('Leçon introuvable.');
+    }
+
+    return $this->render('buy/lesson_summary.html.twig', [
+        'lesson' => $lesson,
+    ]);
+}
+
 }

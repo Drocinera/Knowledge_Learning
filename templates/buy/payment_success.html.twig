@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement effectué{% endblock %}
+
+{% block body %}
+<div>
+    <div class="summury-buy">     
+        <h1>Paiement effectué avec succès !</h1>
+        <p>Merci pour votre achat.</p>
+        <p class="h4">Résumé :</p>
+        <div class="detail-summury-buy">
+            <ul>
+                <li class="text-decoration-underline">{{ description }}</li>
+                <li>Montant : <mark>{{ amount }}<mark> €</li>
+            </ul>
+        </div>
+        <div>
+            <a href="{{ path('app_formation') }}" class="btn btn-primary">Retour aux formations</a>
+        <div>
+    </div> 
+</div> 
+{% endblock %}
