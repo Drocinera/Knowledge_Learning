@@ -14,6 +14,10 @@ class Lessons
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\ManyToOne(targetEntity: Courses::class, inversedBy: "lessons")]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Courses $course = null; 
+
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -41,6 +45,18 @@ class Lessons
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getCourse(): ?Courses
+    {
+        return $this->course;
+    }
+
+    public function setCourse(?Courses $course): static
+    {
+        $this->course = $course;
+
+        return $this;
     }
 
     public function getName(): ?string

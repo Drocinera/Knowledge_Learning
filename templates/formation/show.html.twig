@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la Formation{% endblock %}
+
+{% block body %}
+<div>
+    <div class="div-formation-name">
+        <h1>{{ formation.name }}</h1>
+    </div>
+    <div class="courses-grid">
+        {% for course in courses %}
+            <div class="courses-card">
+                <div class="courses-details">
+                    <h3>{{ course.name }}</h3>
+                    <p class="price-courses-formation"><strong class="text-decoration-underline">Prix pour le cursus entier</strong> : <mark>{{ course.price }}</mark> €</p>
+                    <h4>Leçons :</h4>
+                    <ul>
+                        {% for lesson in course.lessons %}
+                            <li class="lesson-list">
+                            <h4 class="lesson-name">{{ lesson.name }}</h4>
+                            <p><strong class="text-decoration-underline">Prix pour la leçon individuelle</strong> : <mark>{{ lesson.price }}</mark> €</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

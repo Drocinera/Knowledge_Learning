@@ -16,6 +16,11 @@ class LessonsRepository extends ServiceEntityRepository
         parent::__construct($registry, Lessons::class);
     }
 
+    public function findAllLessons()
+    {
+        return $this->findAll();
+    }
+
     //    /**
     //     * @return Lessons[] Returns an array of Lessons objects
     //     */

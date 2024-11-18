@@ -26,3 +26,7 @@ h1 {
     width: 15.6em;
     padding: 1em;
 }
+
+li {
+    list-style-type: none;
+}

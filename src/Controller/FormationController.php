@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Repository\ThemesRepository;
+use App\Repository\CoursesRepository;
+use App\Repository\LessonsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -18,12 +20,22 @@ class FormationController extends AbstractController
     }
 
     #[Route('/formation/{id}', name: 'app_formation_show')]
-    public function show(int $id, ThemesRepository $themesRepository): Response
-    {
+    public function show(
+        int $id, 
+        ThemesRepository $themesRepository
+    ): Response {
         $formation = $themesRepository->find($id);
-
+    
+        if (!$formation) {
+            throw $this->createNotFoundException('Cette formation n\'existe pas.');
+        }
+    
+        // Récupérer directement les cursus associés à la formation
+        $courses = $formation->getCourses();
+    
         return $this->render('formation/show.html.twig', [
             'formation' => $formation,
+            'courses' => $courses,
         ]);
     }
 }

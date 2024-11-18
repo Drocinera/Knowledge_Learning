@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ThemesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: ThemesRepository::class)]
 class Themes
@@ -12,6 +14,9 @@ class Themes
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\OneToMany(mappedBy: 'theme', targetEntity: Courses::class)]
+    private Collection $courses;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -37,6 +42,38 @@ class Themes
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __construct()
+    {
+        $this->courses = new ArrayCollection();
+    }
+
+    public function getCourses(): Collection
+    {
+        return $this->courses;
+    }
+
+    public function addCourse(Courses $course): static
+    {
+        if (!$this->courses->contains($course)) {
+            $this->courses->add($course);
+            $course->setTheme($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCourse(Courses $course): static
+    {
+        if ($this->courses->removeElement($course)) {
+            // Set the owning side to null (unless already changed)
+            if ($course->getTheme() === $this) {
+                $course->setTheme(null);
+            }
+        }
+
+        return $this;
     }
 
     public function getName(): ?string

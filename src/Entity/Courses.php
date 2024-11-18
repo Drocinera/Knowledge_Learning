@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\CoursesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: CoursesRepository::class)]
 class Courses
@@ -13,6 +15,9 @@ class Courses
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+    
+    #[ORM\OneToMany(mappedBy: "course", targetEntity: Lessons::class, orphanRemoval: true)]
+    private Collection $lessons;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -42,6 +47,38 @@ class Courses
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __construct()
+    {
+        $this->lessons = new ArrayCollection();
+    }
+
+    public function getLessons(): Collection
+    {
+        return $this->lessons;
+    }
+
+    public function addLesson(Lessons $lesson): static
+    {
+        if (!$this->lessons->contains($lesson)) {
+            $this->lessons[] = $lesson;
+            $lesson->setCourse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLesson(Lessons $lesson): static
+    {
+        if ($this->lessons->removeElement($lesson)) {
+            // Set the owning side to null (unless already changed)
+            if ($lesson->getCourse() === $this) {
+                $lesson->setCourse(null);
+            }
+        }
+
+        return $this;
     }
 
     public function getName(): ?string
@@ -124,6 +161,18 @@ class Courses
     public function setUpdatedBy(string $updated_by): static
     {
         $this->updated_by = $updated_by;
+
+        return $this;
+    }
+
+    public function getTheme(): ?Themes
+    {
+        return $this->theme;
+    }
+
+    public function setTheme(?Themes $theme): static
+    {
+        $this->theme = $theme;
 
         return $this;
     }
