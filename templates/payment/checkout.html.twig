@@ -1,0 +1,8 @@
+<div class="cart-summary">
+    <h2>Total : {{ totalPrice }} €</h2>
+    <form action="{{ path('cart_checkout') }}" method="post">
+        <button type="submit" class="btn">Finaliser ma commande</button>
+    </form>
+    <br><br>
+    <a href="{{ path('app_products') }}" class="btn">Continuer mes achats</a>
+</div>

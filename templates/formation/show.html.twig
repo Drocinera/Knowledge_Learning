@@ -20,10 +20,8 @@
                             <h4 class="lesson-name">{{ lesson.name }}</h4>
                             <p><strong class="text-decoration-underline">Prix pour la leçon individuelle</strong> : <mark>{{ lesson.price }}</mark> €</p>
                              {% if is_granted('ROLE_USER') %}
-                                    <div class="lesson-buy-button">
-                                        <a href="{{ path('app_buy_lesson_summary', { id: lesson.id }) }}" class="btn btn-secondary">
-                                            Acheter {{ lesson.name }}
-                                        </a>
+                                <a href="{{ path('app_stripe_checkout', {type: 'lesson', id: lesson.id}) }}" class="btn">Acheter " {{ lesson.name }} "</a>
+                            {% else %}
                                     </div>
                                 {% endif %}
                             </li>
@@ -31,7 +29,7 @@
                     </ul>
                     {% if is_granted('ROLE_USER') %}
                         <div class="course-buy-button">
-                            <a href="{{ path('app_buy_course_summary', { id: course.id }) }}" class="btn btn-primary display-1">
+                            <a href="{{ path('app_stripe_checkout', {type: 'course', id: course.id}) }}" class="btn btn-primary display-1">
                                 Acheter le cursus
                             </a>
                         </div>

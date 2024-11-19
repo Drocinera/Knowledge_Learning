@@ -31,6 +31,9 @@ services:
             $twig: '@twig'
         tags:
             - { name: 'kernel.event_subscriber' }
+    App\Service\StripeService:
+        arguments:
+            $stripeSecretKey: '%env(STRIPE_SECRET_KEY)%'
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
