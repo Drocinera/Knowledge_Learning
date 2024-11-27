@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\LessonsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: LessonsRepository::class)]
 class Lessons
@@ -17,6 +19,9 @@ class Lessons
     #[ORM\ManyToOne(targetEntity: Courses::class, inversedBy: "lessons")]
     #[ORM\JoinColumn(nullable: false)]
     private ?Courses $course = null; 
+
+    #[ORM\OneToMany(mappedBy: 'lesson', targetEntity: Comprise::class)]
+    private Collection $comprises;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -55,6 +60,41 @@ class Lessons
     public function setCourse(?Courses $course): static
     {
         $this->course = $course;
+
+        return $this;
+    }
+
+    public function __construct()
+    {
+        $this->comprises = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection<int, Comprise>
+     */
+    public function getComprises(): Collection
+    {
+        return $this->comprises;
+    }
+
+    public function addComprise(Comprise $comprise): self
+    {
+        if (!$this->comprises->contains($comprise)) {
+            $this->comprises->add($comprise);
+            $comprise->setLesson($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComprise(Comprise $comprise): self
+    {
+        if ($this->comprises->removeElement($comprise)) {
+            // Déconnecter la relation côté `Comprise`
+            if ($comprise->getLesson() === $this) {
+                $comprise->setLesson(null);
+            }
+        }
 
         return $this;
     }

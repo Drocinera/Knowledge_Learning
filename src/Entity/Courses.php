@@ -40,7 +40,7 @@ class Courses
     #[ORM\Column(length: 255)]
     private ?string $updated_by = null;
 
-    #[ORM\ManyToOne(targetEntity: Themes::class)]
+    #[ORM\ManyToOne(targetEntity: Themes::class, inversedBy: 'courses')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Themes $theme = null;
 

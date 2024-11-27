@@ -36,4 +36,20 @@ class Purchases
 
         return $this;
     }
+
+    public function __construct()
+    {
+        $this->purchase_date = new \DateTimeImmutable();
+    }
+
+    public function getUser(): ?Users
+    {
+        return $this->user;
+    }
+
+    public function setUser(?Users $user): self
+    {
+        $this->user = $user;
+        return $this;
+    }
 }

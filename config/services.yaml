@@ -18,6 +18,7 @@ security:
                 #always_remember_me: true
                 
 parameters:
+    stripe_webhook_secret: '%env(STRIPE_WEBHOOK_SECRET)%'
 
 services:
     App\EventSubscriber\EntitySubscriber:
@@ -34,6 +35,9 @@ services:
     App\Service\StripeService:
         arguments:
             $stripeSecretKey: '%env(STRIPE_SECRET_KEY)%'
+    App\Service\PurchaseManager:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

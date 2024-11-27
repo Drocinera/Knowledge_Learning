@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Comprise;
+use App\Entity\Users;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -15,6 +16,26 @@ class CompriseRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Comprise::class);
     }
+
+    public function hasAccess(Users $user, string $type, int $itemId): bool
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->join('c.purchase', 'p')
+            ->where('p.user = :user')
+            ->andWhere('c.access_granted = true');
+
+        if ($type === 'course') {
+            $qb->andWhere('c.course = :itemId');
+        } elseif ($type === 'lesson') {
+            $qb->andWhere('c.lesson = :itemId');
+        }
+
+        $qb->setParameter('user', $user)
+           ->setParameter('itemId', $itemId);
+
+        return (bool) $qb->getQuery()->getOneOrNullResult();
+    }
+
 
     //    /**
     //     * @return Comprise[] Returns an array of Comprise objects

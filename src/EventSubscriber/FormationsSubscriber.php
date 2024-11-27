@@ -15,9 +15,9 @@ use Twig\Environment;
 
 class FormationsSubscriber implements EventSubscriberInterface
 {
-    private $ThemesRepository;
-    private $CoursesRepository;
-    private $LessonsRepository;
+    private ThemesRepository $themesRepository;
+    private CoursesRepository $coursesRepository;
+    private LessonsRepository $lessonsRepository;
     private $twig;
 
     public function __construct(ThemesRepository $themesRepository,CoursesRepository $coursesRepository, LessonsRepository $lessonsRepository, Environment $twig)

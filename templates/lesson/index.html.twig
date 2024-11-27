@@ -1,20 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LessonController!{% endblock %}
+{% block title %}Lesson{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="lesson-div">
+    <div class="lesson-title">
+        <h1> lecon n° (nom de la lecon) </h1>
+    </div>
+    <div class="lesson-sheet">
+        <div>
+            <h2> Fiche de la lecon (nom lecon)</h2>
+        </div>
+        <div class="lesson-explication">
+            <p>     
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse pharetra viverra mi sit amet commodo. Sed accumsan tincidunt metus, in finibus neque commodo eget. 
+            Fusce non metus quis turpis volutpat consectetur et ut velit. Nullam gravida ex commodo arcu tristique, vel eleifend tellus ultricies. 
+            Mauris congue, erat fermentum viverra sollicitudin, massa diam tincidunt massa, nec ultrices justo dui ac tellus. 
+            Etiam sed elementum leo. Nulla a nibh turpis. Ut vitae tortor nec nisl mollis viverra eget cursus nulla. 
+            Duis rhoncus velit tempus auctor porta. Nunc facilisis blandit turpis, eget hendrerit eros lobortis vestibulum. 
+            Nunc luctus augue libero, ac iaculis eros sagittis at.
+            </p>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+            <p>
+                Aliquam blandit, ipsum at pellentesque consectetur, dolor leo dapibus purus, quis condimentum sem libero id dolor.
+            Aliquam vehicula congue malesuada. Quisque nec est quis dui interdum ultrices. Phasellus lacus turpis, ornare eu neque sit amet, auctor facilisis velit.
+            Nulla in augue varius, porta nisl ut, efficitur sapien. Integer eget tellus ac nisl cursus scelerisque. 
+            Maecenas blandit vehicula lectus vitae auctor. Ut vitae convallis velit. Mauris ut tincidunt dui. 
+            Vestibulum lobortis purus non purus suscipit, quis rhoncus nisl consectetur. Mauris ullamcorper dolor sit amet elementum blandit. 
+            Nam pharetra interdum nisl, a dapibus felis facilisis id. Proin semper arcu libero, in suscipit lectus condimentum non. 
+            Integer eu nunc facilisis, cursus nunc vel, scelerisque quam. Curabitur pulvinar posuere velit, eget ultricies odio mollis a.
+            </p>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/theop/Symfony_knowledge_learning/src/Controller/LessonController.php</code></li>
-        <li>Your template at <code>C:/Users/theop/Symfony_knowledge_learning/templates/lesson/index.html.twig</code></li>
-    </ul>
+            <p>
+                Donec lorem felis, convallis eu purus ac, volutpat posuere turpis. 
+            Pellentesque rhoncus diam sit amet velit gravida, a tempor neque ultricies. 
+            Suspendisse facilisis, ante eu varius convallis, diam dolor cursus ipsum, vitae sollicitudin dolor orci vitae ligula. 
+            Nulla non ante at ex accumsan malesuada. Phasellus vitae metus felis. Aenean dignissim ultricies lorem ac scelerisque. 
+            Sed sed suscipit elit, vitae tempus erat. Phasellus aliquam laoreet ex, vel ornare tortor eleifend quis. Suspendisse volutpat, erat in ultricies suscipit, odio urna tristique massa, a rhoncus mauris sapien eget orci. 
+            Integer eu nisl quis sem eleifend malesuada. Etiam nulla purus, euismod et lacinia vel, dignissim non ipsum. 
+            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas
+            </p>
+        </div>
+        <div class="lesson-video"> 
+            <video src="..." class="object-fit-contain">video de la lecon</video>
+        </div>
+    </div>
 </div>
 {% endblock %}
