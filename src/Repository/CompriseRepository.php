@@ -27,8 +27,11 @@ class CompriseRepository extends ServiceEntityRepository
         if ($type === 'course') {
             $qb->andWhere('c.course = :itemId');
         } elseif ($type === 'lesson') {
-            $qb->andWhere('c.lesson = :itemId');
-        }
+            // Vérifier si l'accès est donné à la leçon individuellement ou via un cursus
+            $qb->leftJoin('c.course', 'course')
+            ->leftJoin('course.lessons', 'lesson')
+            ->andWhere('(c.lesson = :itemId OR lesson.id = :itemId)');
+    }
 
         $qb->setParameter('user', $user)
            ->setParameter('itemId', $itemId);

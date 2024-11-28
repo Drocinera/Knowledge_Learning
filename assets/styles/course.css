@@ -1,0 +1,21 @@
+.cursus-lesson-sheet {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.cursus-lesson-sheet > ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cursus-lesson-card {
+    border: 3px solid black;
+    display: flex;
+    padding: 1em;
+    margin: 0.5em;
+    flex-direction: column;
+    background-color: #384050;
+}

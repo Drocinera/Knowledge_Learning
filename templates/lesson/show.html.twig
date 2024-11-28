@@ -1,17 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Lesson{% endblock %}
+{% block title %}{{ lesson.name }}{% endblock %}
 
 {% block body %}
 <div class="lesson-div">
     <div class="lesson-title">
-        <h1> lecon n° (nom de la lecon) </h1>
+        <h1> lecon : {{ lesson.name }}</h1>
     </div>
     <div class="lesson-sheet">
         <div>
-            <h2> Fiche de la lecon (nom lecon)</h2>
+            <h2> Fiche de la lecon "{{ lesson.name }}"</h2>
         </div>
         <div class="lesson-explication">
+            <h3> Partie 1 </h3>
             <p>     
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse pharetra viverra mi sit amet commodo. Sed accumsan tincidunt metus, in finibus neque commodo eget. 
             Fusce non metus quis turpis volutpat consectetur et ut velit. Nullam gravida ex commodo arcu tristique, vel eleifend tellus ultricies. 
@@ -41,9 +42,19 @@
             Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas
             </p>
         </div>
-        <div class="lesson-video"> 
-            <video src="..." class="object-fit-contain">video de la lecon</video>
-        </div>
+        {% if lesson.video_Url %}
+        <div class="video-container">
+            <div>
+                <h2>Vidéo de la leçon</h2>
+            </div>
+                <video controls width="100%">
+                    <source src= "{{ asset(lesson.video_Url) }}" type="video/mp4">
+                Votre navigateur ne supporte pas la lecture vidéo.
+                </video>
+            </div>
+            {% else %}
+                <p>Cette leçon ne contient pas de vidéo.</p>
+            {% endif %}
     </div>
 </div>
 {% endblock %}

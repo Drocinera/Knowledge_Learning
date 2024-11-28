@@ -22,6 +22,55 @@
     -moz-border-radius: 30px;
     }
     
+.btn-access-course {
+    text-decoration: none;
+        padding: 10px;
+        font-family: arial;
+        font-size: 1em;
+        color: white;
+        background-color: #384050;
+        border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border: 3px solid #cd2c2e;
+        box-shadow: 0px 0px 5px #000000;
+        -webkit-box-shadow: 0px 0px 5px #000000;
+        -moz-box-shadow: 0px 0px 5px #000000;
+}
+
+.btn-access-lesson {
+    text-decoration: none;
+        padding: 10px;
+        font-family: arial;
+        font-size: 1em;
+        color: white;
+        background-color: #0074c7;
+        border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border: 3px solid #82b864;
+        box-shadow: 0px 0px 5px #000000;
+        -webkit-box-shadow: 0px 0px 5px #000000;
+        -moz-box-shadow: 0px 0px 5px #000000;
+}
+
+.btn-access-course:hover {
+    padding: 10px;
+    background-color: #cd2c2e;
+    border: 6px inset #00497c;
+    box-shadow: 3px 3px 8px #000000;
+    -webkit-box-shadow: 3px 3px 8px #000000;
+    -moz-box-shadow: 3px 3px 8px #000000;
+}
+
+.btn-access-lesson:hover {
+    padding: 10px;
+    background-color: #82b864;
+    border: 6px inset #00497c;
+    box-shadow: 3px 3px 8px #000000;
+    -webkit-box-shadow: 3px 3px 8px #000000;
+    -moz-box-shadow: 3px 3px 8px #000000;
+}
     
 .btn:hover {
     padding: 10px;

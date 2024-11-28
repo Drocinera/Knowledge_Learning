@@ -14,33 +14,43 @@
                     <h3>{{ course.name }}</h3>
                     <p class="price-courses-formation"><strong class="text-decoration-underline">Prix pour le cursus entier</strong> : <mark>{{ course.price }}</mark> €</p>
                     <h4>Leçons :</h4>
-                    <ul>
-                        {% for lesson in course.lessons %}
+                        <ul>
+                            {% for lesson in course.lessons %}
                             <li class="lesson-list">
-                            <h4 class="lesson-name">{{ lesson.name }}</h4>
-                            <p><strong class="text-decoration-underline">Prix pour la leçon individuelle</strong> : <mark>{{ lesson.price }}</mark> €</p>
-                             {% if is_granted('ROLE_USER') %}
-                                <a href="{{ path('app_stripe_checkout', {type: 'lesson', id: lesson.id}) }}" class="btn">Acheter " {{ lesson.name }} "</a>
-                            {% else %}
-                                    </div>
+                                <h4 class="lesson-name">{{ lesson.name }}</h4>
+                                <p><strong class="text-decoration-underline">Prix pour la leçon individuelle</strong> : <mark>{{ lesson.price }}</mark> €</p>
+                                
+                                {% if is_granted('ROLE_USER') %}
+                                    {% set accessKey = 'lesson_' ~ lesson.id %}
+                                    {% if accessMap[accessKey] is defined and accessMap[accessKey] %}
+                                        <a href="{{ path('app_lesson_access', {id: lesson.id}) }}" class="btn-access-lesson">Accéder à "{{ lesson.name }}"</a>
+                                    {% else %}
+                                        <a href="{{ path('app_stripe_checkout', {type: 'lesson', id: lesson.id}) }}" class="btn">Acheter "{{ lesson.name }}"</a>
+                                    {% endif %}
+                                {% else %}
+                                    <p>Connectez-vous pour accéder ou acheter.</p>
                                 {% endif %}
                             </li>
                         {% endfor %}
-                    </ul>
+
+                    <div class="course-buy-button">
+                    {% set accessKey = 'course_' ~ course.id %}
                     {% if is_granted('ROLE_USER') %}
-                        <div class="course-buy-button">
+                        {% if accessMap[accessKey] is defined and accessMap[accessKey] %}
+                            <a href="{{ path('app_course_access', {id: course.id}) }}" class="btn-access-course display-1">
+                                Accéder au cursus
+                            </a>
+                        {% else %}
                             <a href="{{ path('app_stripe_checkout', {type: 'course', id: course.id}) }}" class="btn btn-primary display-1">
                                 Acheter le cursus
                             </a>
-                        </div>
+                        {% endif %}
                     {% else %}
                         <p>Pour effectuer un achat, connectez-vous.</p>
                     {% endif %}
                 </div>
             </div>
         {% endfor %}
-    </div>
-</div>
     </div>
 </div>
 {% endblock %}

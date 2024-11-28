@@ -123,12 +123,12 @@ class Lessons
         return $this;
     }
 
-    public function getVideoUrl(): ?string
+    public function getVideo_Url(): ?string
     {
         return $this->video_url;
     }
 
-    public function setVideoUrl(string $video_url): static
+    public function setVideo_Url(string $video_url): static
     {
         $this->video_url = $video_url;
 

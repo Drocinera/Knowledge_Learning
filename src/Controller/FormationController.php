@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\ThemesRepository;
 use App\Repository\CoursesRepository;
 use App\Repository\LessonsRepository;
+use App\Repository\CompriseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -22,8 +23,10 @@ class FormationController extends AbstractController
     #[Route('/formation/{id}', name: 'app_formation_show')]
     public function show(
         int $id, 
-        ThemesRepository $themesRepository
+        ThemesRepository $themesRepository,
+        CompriseRepository $compriseRepository
     ): Response {
+        $user = $this->getUser();
         $formation = $themesRepository->find($id);
     
         if (!$formation) {
@@ -32,13 +35,36 @@ class FormationController extends AbstractController
     
         // Récupérer directement les cursus associés à la formation
         $courses = $formation->getCourses();
+        $accessMap = [];
+    
+        if ($user) {
+            // Construire une map d'accès : [courseId => true/false, lessonId => true/false]
+            foreach ($courses as $course) {
+                // Accès au cursus
+                $courseAccess = $compriseRepository->hasAccess($user, 'course', $course->getId());
+                $accessMap['course_' . $course->getId()] = $courseAccess;
+    
+                // Accès aux leçons associées au cursus ou achetées individuellement
+                foreach ($course->getLessons() as $lesson) {
+                    $lessonAccess = $compriseRepository->hasAccess($user, 'lesson', $lesson->getId());
+    
+                    // Accorder l'accès à la leçon si le cursus est acheté
+                    if ($courseAccess) {
+                        $lessonAccess = true;
+                    }
+    
+                    $accessMap['lesson_' . $lesson->getId()] = $lessonAccess;
+                }
+            }
+        }
+    
     
         return $this->render('formation/show.html.twig', [
             'formation' => $formation,
             'courses' => $courses,
+            'accessMap' => $accessMap,
         ]);
     }
-
     #[Route('/buy/course/{id}/summary', name: 'app_buy_course_summary')]
 public function buyCourseSummary(int $id, CoursesRepository $coursesRepository): Response
 {
