@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -45,6 +47,9 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private bool $isVerified = false;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Certifications::class, orphanRemoval: true)]
+    private Collection $certifications;
 
 
     public function getId(): ?int
@@ -195,5 +200,39 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
             }
         }
+    }
+    public function __construct()
+    {
+        $this->certifications = new ArrayCollection();
+    }
+    
+    /**
+     * @return Collection<int, Certifications>
+     */
+    public function getCertifications(): Collection
+    {
+        return $this->certifications;
+    }
+    
+    public function addCertification(Certifications $certification): self
+    {
+        if (!$this->certifications->contains($certification)) {
+            $this->certifications->add($certification);
+            $certification->setUser($this);
+        }
+    
+        return $this;
+    }
+    
+    public function removeCertification(Certifications $certification): self
+    {
+        if ($this->certifications->removeElement($certification)) {
+            // Déconnecte la relation côté Certifications
+            if ($certification->getUser() === $this) {
+                $certification->setUser(null);
+            }
+        }
+    
+        return $this;
     }
 }

@@ -56,5 +56,14 @@
                 <p>Cette leçon ne contient pas de vidéo.</p>
             {% endif %}
     </div>
+    <div class="finish-lesson-div">
+        {% if is_granted('ROLE_USER') %}
+            {% if isValidated %}
+                <button class="btn btn-success" disabled>Leçon déjà validée</button>
+            {% else %}
+                <a href="{{ path('app_lesson_validate', { id: lesson.id }) }}" class="btn btn-primary">Terminer la leçon</a>
+            {% endif %}
+    {% endif %}
+    </div>
 </div>
 {% endblock %}

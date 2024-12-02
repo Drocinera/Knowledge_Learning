@@ -91,6 +91,5 @@ public function buyLessonSummary(int $id, LessonsRepository $lessonsRepository):
     return $this->render('buy/lesson_summary.html.twig', [
         'lesson' => $lesson,
     ]);
-}
-
+}   
 }

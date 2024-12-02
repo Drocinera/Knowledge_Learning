@@ -53,6 +53,10 @@
                     </ul>
                 </div>
                 
+                    <a href="{{ path('app_certifications') }}" class="{% if app.request.get('_route') == 'app_certifications' %}active{% endif %}">
+                    Mes Certifications
+                    </a>
+                
                     <a href="{{ path('app_logout') }}">
                         Se déconnecter
                     </a>
