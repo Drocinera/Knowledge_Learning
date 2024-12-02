@@ -11,7 +11,7 @@
     <ul>
         {% for certification in certifications %}
             <li>
-                <strong>{{ certification.title }}</strong> - {{ certification.description }} 
+                <strong>{{ certification.title }} - {{ certification.description }} </strong>
                 (obtenue le {{ certification.dateAwarded|date('d/m/Y') }})
             </li>
         {% endfor %}
