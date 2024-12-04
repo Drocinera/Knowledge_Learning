@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Voir les achats{% endblock %}
+
+{% block body %}
+    <h1>Voir les achats</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Utilisateur</th>
+                <th>Date</th>
+                <th>Montant</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for purchase in purchases %}
+                <tr>
+                    <td>{{ purchase.id }}</td>
+                    <td>{{ purchase.user.email }}</td>
+                    <td>{{ purchase.date|date('d/m/Y') }}</td>
+                    <td>{{ purchase.amount }} €</td>
+                    <td>
+                        <a href="{{ path('app_admin_view_purchase', {id: purchase.id}) }}" class="btn btn-info">Détails</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

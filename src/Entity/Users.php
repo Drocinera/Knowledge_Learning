@@ -52,6 +52,17 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $certifications;
 
 
+    #[ORM\PreUpdate]
+    public function preUpdate(): void
+    {
+        // Mettre à jour le champ 'updated_at' à la date/heure actuelle
+        $this->updated_at = new \DateTimeImmutable();
+
+        // Mettre à jour le champ 'updated_by'
+        $this->updated_by = 'current_email'; 
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,9 +87,11 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     public function getRoles(): array
-    {
-        return [$this->role ? $this->role->getName() : 'ROLE_USER'];
-    }
+{
+    // Retourne le nom du rôle, ou 'ROLE_USER' si aucun rôle n'est défini
+    return $this->role ? [$this->role->getName()] : ['ROLE_USER'];
+}
+
 
     public function setRole(Role $role): self
     {

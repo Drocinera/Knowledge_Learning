@@ -1,0 +1,24 @@
+<form method="post">
+    <div>
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" value="{{ user.email }}" required>
+    </div>
+
+    <div>
+        <label for="role">Rôle :</label>
+        <select id="role" name="role">
+            {% for role in roles %}
+                <option value="{{ role.id }}" {% if user.getRoles() and role.name == user.getRoles()[0] %}selected{% endif %}>
+                    {{ role.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div>
+        <label for="is_active">Actif :</label>
+        <input type="checkbox" id="is_active" name="is_active" {% if user.isActive() %}checked{% endif %}>
+    </div>
+
+    <button type="submit">Mettre à jour</button>
+</form>
