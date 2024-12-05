@@ -32,10 +32,20 @@ class Comprise {
     #[ORM\Column]
     private ?bool $access_granted = null;
 
+    public function getCourse(): ?Courses
+    {
+        return $this->course;
+    }
+
         public function setCourse(?Courses $course): static
     {
         $this->course = $course;
         return $this;
+    }
+
+    public function getPurchase(): ?Purchases
+    {
+        return $this->purchase;
     }
 
     public function setPurchase(?Purchases $purchase): static
@@ -44,11 +54,23 @@ class Comprise {
         return $this;
     }
 
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+
     public function setPrice(string $price): static
     {
         $this->price = $price;
         return $this;
     }
+
+    public function getAccessGranted(): ?bool
+    {
+        return $this->access_granted;
+    }
+
 
     public function setAccessGranted(bool $access_granted): static
     {

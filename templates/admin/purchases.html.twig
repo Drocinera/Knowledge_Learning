@@ -1,31 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Voir les achats{% endblock %}
+{% block title %}Gestion des Achats{% endblock %}
 
 {% block body %}
-    <h1>Voir les achats</h1>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
+    <h1>Gestion des Achats</h1>
+
+    <div class="table-containeur">
+    <table>
+        <caption>
+            Liste des achats utilisateurs
+        </caption>
+        <thead class="table-thead">
+            <tr class="row-purchase">
+                <th>ID Achat</th>
                 <th>Utilisateur</th>
-                <th>Date</th>
-                <th>Montant</th>
-                <th>Actions</th>
+                <th>Date d'achat</th>
+                <th>Course</th>
+                <th>Leçon</th>
+                <th>Prix</th>
+                <th>Accès</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="table-body">
             {% for purchase in purchases %}
-                <tr>
-                    <td>{{ purchase.id }}</td>
-                    <td>{{ purchase.user.email }}</td>
-                    <td>{{ purchase.date|date('d/m/Y') }}</td>
-                    <td>{{ purchase.amount }} €</td>
-                    <td>
-                        <a href="{{ path('app_admin_view_purchase', {id: purchase.id}) }}" class="btn btn-info">Détails</a>
-                    </td>
-                </tr>
+                {% set user = purchase.user %}
+                {% for comprise in comprises %}
+                    {% if comprise.purchase.id == purchase.id %}
+                        <tr class="table-row">
+                            <td>{{ purchase.id }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ purchase.purchaseDate|date('d/m/Y H:i') }}</td>
+                            <td>{{ comprise.course ? comprise.course.name : 'N/A' }}</td>
+                            <td>{{ comprise.lesson ? comprise.lesson.name : 'N/A' }}</td>
+                            <td>{{ comprise.price }}</td>
+                            <td>{{ comprise.accessGranted ? 'Oui' : 'Non' }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
             {% endfor %}
         </tbody>
     </table>
+    </div>
 {% endblock %}

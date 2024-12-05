@@ -6,6 +6,7 @@ use App\Entity\Users;
 use App\Entity\Role;
 use App\Entity\Courses;
 use App\Entity\Purchases;
+use App\Entity\Comprise;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -142,13 +143,20 @@ class AdminController extends AbstractController
 
     #[Route('/admin/purchases', name: 'app_admin_purchases')]
     public function managePurchases(EntityManagerInterface $entityManager): Response
-    {
-        $purchases = $entityManager->getRepository(Purchase::class)->findAll();
+{
+    // Récupérer tous les achats
+    $purchases = $entityManager->getRepository(Purchases::class)
+        ->findBy([], ['user' => 'ASC']); // Trier par utilisateur
 
-        return $this->render('admin/purchases.html.twig', [
-            'purchases' => $purchases,
-        ]);
-    }
+    // Récupérer les Comprises associées à chaque achat
+    $comprises = $entityManager->getRepository(Comprise::class)->findAll();
+
+    // Envoyer les données aux templates
+    return $this->render('admin/purchases.html.twig', [
+        'purchases' => $purchases,
+        'comprises' => $comprises,
+    ]);
+}
 
 
 }
