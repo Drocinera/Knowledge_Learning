@@ -29,7 +29,7 @@ class Lessons
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $video_url = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
@@ -67,6 +67,8 @@ class Lessons
     public function __construct()
     {
         $this->comprises = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable(); 
+        $this->updated_at = new \DateTimeImmutable();
     }
 
     /**
@@ -123,12 +125,12 @@ class Lessons
         return $this;
     }
 
-    public function getVideo_Url(): ?string
+    public function getVideoUrl(): ?string
     {
         return $this->video_url;
     }
 
-    public function setVideo_Url(string $video_url): static
+    public function setVideoUrl(string $video_url): static
     {
         $this->video_url = $video_url;
 

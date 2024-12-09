@@ -47,6 +47,9 @@ class Themes
     public function __construct()
     {
         $this->courses = new ArrayCollection();
+        $this->courses = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable(); // Initialiser la date de création
+        $this->updated_at = new \DateTimeImmutable(); // Initialiser la date de mise à jour
     }
 
     public function getCourses(): Collection

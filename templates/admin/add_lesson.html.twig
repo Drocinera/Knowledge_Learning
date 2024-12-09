@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Ajouter une Leçon</h1>
+
+{{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.video_url) }}
+    {{ form_row(form.price) }}
+    {{ form_row(form.course) }}
+{{ form_end(form) }}
+
+
+<a href="{{ path('app_admin_content') }}">Retour</a>
+{% endblock %}

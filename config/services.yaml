@@ -19,6 +19,7 @@ security:
                 
 parameters:
     stripe_webhook_secret: '%env(STRIPE_WEBHOOK_SECRET)%'
+    images_directory: '%kernel.project_dir%/public/Images'
 
 services:
     App\EventSubscriber\EntitySubscriber:

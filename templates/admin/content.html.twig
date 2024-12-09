@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Achats{% endblock %}
+
+{% block body %}
+
+<h1>Gérer le Contenu</h1>
+
+<!-- Gestion des Thèmes -->
+<h2>Thèmes</h2>
+
+<div class="table-containeur">
+    <div class="table-content-theme">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for theme in themes %}
+                <tr>
+                    <td class="table-case-content">{{ theme.id }}</td>
+                    <td class="table-case-content">{{ theme.name }}</td>
+                    <td class="table-case-content">{{ theme.description }}</td>
+                    <td class="table-case-content">
+                        <a href="{{ path('app_admin_edit_theme', {id: theme.id}) }}">Modifier</a>
+                        <a href="{{ path('app_admin_delete', { type: 'theme', id: theme.id }) }}" 
+                            onclick="return confirm('Supprimer ce thème ?');">
+                            Supprimer
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('app_admin_add_theme') }}">Ajouter un thème</a>
+    </div>
+
+<!-- Gestion des Cursus -->
+<h2>Cursus</h2>
+    <div class="table-content-cursus">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Thème</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for course in courses %}
+                <tr>
+                    <td>{{ course.id }}</td>
+                    <td>{{ course.name }}</td>
+                    <td>{{ course.theme.name }}</td>
+                    <td>
+                        <a href="{{ path('app_admin_edit_course', {id: course.id}) }}">Modifier</a>
+                        <a href="{{ path('app_admin_delete', { type: 'course', id: course.id }) }}" 
+                            onclick="return confirm('Supprimer ce cursus ?');">
+                            Supprimer
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('app_admin_add_course') }}">Ajouter un cursus</a>
+    </div>
+
+<!-- Gestion des Leçons -->
+<h2>Leçons</h2>
+    <div>
+        <table class="table-content-lesson">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>Cursus</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lesson in lessons %}
+                <tr>
+                    <td>{{ lesson.id }}</td>
+                    <td>{{ lesson.name }}</td>
+                    <td>{{ lesson.course.name }}</td>
+                    <td>
+                        <a href="{{ path('app_admin_edit_lesson', {id: lesson.id}) }}">Modifier</a>
+                        <a href="{{ path('app_admin_delete', { type: 'lesson', id: lesson.id }) }}" 
+                            onclick="return confirm('Supprimer cette leçon ?');">
+                            Supprimer
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('app_admin_add_lesson') }}">Ajouter une leçon</a>
+    <div>
+
+    <div>
+        <a href="{{ path('app_admin_dashboard') }}" class="btn btn-primary">Retour aux menu administrateur</a>
+    <div>
+</div>
+{% endblock %}
+
