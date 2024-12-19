@@ -45,9 +45,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $updated_by = null;
 
-    #[ORM\Column]
-    private bool $isVerified = false;
-
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Certifications::class, orphanRemoval: true)]
     private Collection $certifications;
 
@@ -177,18 +174,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedBy(string $updated_by): static
     {
         $this->updated_by = $updated_by;
-
-        return $this;
-    }
-
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setVerified(bool $isVerified): static
-    {
-        $this->isVerified = $isVerified;
 
         return $this;
     }

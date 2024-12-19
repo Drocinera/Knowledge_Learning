@@ -38,7 +38,7 @@ class FormationsSubscriber implements EventSubscriberInterface
         $this->twig->addGlobal('lessons' , $lessons);
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::CONTROLLER => 'onKernelController',
