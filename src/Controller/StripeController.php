@@ -5,8 +5,8 @@ namespace App\Controller;
 use App\Repository\CoursesRepository;
 use App\Repository\LessonsRepository;
 use App\Entity\Users;
-use App\Service\StripeService;
-use App\Service\PurchaseManager;
+use App\Services\StripeService;
+use App\Services\PurchaseManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,10 +19,12 @@ class StripeController extends AbstractController
 {
 
     private EntityManagerInterface $entityManager;
+    private StripeService $stripeService;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, StripeService $stripeService)
     {
         $this->entityManager = $entityManager;
+        $this->stripeService = $stripeService;
     }
 
 
@@ -34,6 +36,7 @@ class StripeController extends AbstractController
         LessonsRepository $lessonsRepository,
         StripeService $stripeService,
         SessionInterface $session
+        
     ): Response {
         if ($type === 'course') {
             $item = $coursesRepository->find($id);
@@ -45,6 +48,10 @@ class StripeController extends AbstractController
             $price = $item->getPrice();
         } else {
             throw $this->createNotFoundException('Type invalide.');
+        }
+
+        if (!$this->getUser()) {
+            throw $this->createAccessDeniedException('Utilisateur non authentifié.');
         }
 
         $session->set('description', $description);

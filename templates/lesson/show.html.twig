@@ -42,13 +42,13 @@
             Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas
             </p>
         </div>
-        {% if lesson.video_Url %}
+        {% if lesson.getVideoUrl() %}
         <div class="video-container">
             <div>
                 <h2>Vidéo de la leçon</h2>
             </div>
                 <video controls width="100%">
-                    <source src= "{{ asset(lesson.video_Url) }}" type="video/mp4">
+                    <source src= "{{ asset(lesson.getVideoUrl()) }}" type="video/mp4">
                 Votre navigateur ne supporte pas la lecture vidéo.
                 </video>
             </div>

@@ -18,6 +18,7 @@ security:
 
         main:
             lazy: true
+            stateless: false
             provider: app_user_provider  # Utilisation du fournisseur de base de données
             form_login:
                 login_path: app_login
@@ -39,6 +40,10 @@ security:
 
 when@test:
     security:
+        firewalls:
+            main:
+                stateless: false
+                form_login: ~
         password_hashers:
             # By default, password hashers are resource intensive and take time. This is
             # important to generate secure password hashes. In tests however, secure hashes
