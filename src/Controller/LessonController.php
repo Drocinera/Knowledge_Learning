@@ -7,40 +7,66 @@ use App\Repository\CertificationsRepository;
 use App\Entity\Valid;
 use App\Entity\Users;
 use App\Entity\Certifications;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+/**
+ * LessonController
+ *
+ * This controller manages lesson page and related-actions : Show lesson, validate lesson and add certification
+ */
 class LessonController extends AbstractController
 {
+
+    /**
+     * Display the selected lesson.
+     *
+     * @param int $id The id of the lesson
+     * @param LessonsRepository $lessonsRepository Repository for lessons. 
+     * @param EntityManagerInterface $entityManager The Doctrine EntityManager for database operations.
+     * 
+     * @return Response A response object that redirects or renders a template
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If the lesson is not found.
+     */
+
     #[Route('/lesson/{id}', name: 'app_lesson_access')]
-public function showLesson(int $id, LessonsRepository $lessonsRepository, EntityManagerInterface $entityManager): Response
-{
-    $lesson = $lessonsRepository->find($id);
-    $user = $this->getUser();
+    public function showLesson(int $id, LessonsRepository $lessonsRepository, EntityManagerInterface $entityManager): Response
+    {
+        $lesson = $lessonsRepository->find($id);
+        $user = $this->getUser();
 
-    if (!$lesson) {
-        throw $this->createNotFoundException('Leçon introuvable.');
-    }
+        if (!$lesson) {
+            throw $this->createNotFoundException('Leçon introuvable.');
+        }
 
-    $isValidated = false;
-    if ($user) {
-        $isValidated = $entityManager->getRepository(Valid::class)
-            ->findOneBy(['user' => $user, 'lesson' => $lesson]) !== null;
-    }
+        $isValidated = false;
+        if ($user) {
+            $isValidated = $entityManager->getRepository(Valid::class)
+                ->findOneBy(['user' => $user, 'lesson' => $lesson]) !== null;
+        }
 
-    return $this->render('lesson/show.html.twig', [
-        'lesson' => $lesson,
-        'isValidated' => $isValidated,
+        return $this->render('lesson/show.html.twig', [
+            'lesson' => $lesson,
+            'isValidated' => $isValidated,
     ]);
 }
 
-private function addCertification(Users $user, string $courseName, EntityManagerInterface $entityManager): void
+    /**
+     * Add Certification after all lesson validate.
+     *
+     * @param Users $user Entity Users
+     * @param LessonsRepository $courseName Link between course and lesson to obtain course data
+     * @param EntityManagerInterface $entityManager The Doctrine EntityManager for database operations.
+     * 
+     * @return Response A response object that redirects or renders a template
+     */
+
+    private function addCertification(Users $user, string $courseName, EntityManagerInterface $entityManager): void
     {
-        dump('Adding certification for user:', $user->getId()); // Vérifie l'ID utilisateur
-        dump('Course name:', $courseName); // Vérifie le nom du cursus
 
         $certification = new Certifications();
         $certification->setUser($user);
@@ -54,71 +80,75 @@ private function addCertification(Users $user, string $courseName, EntityManager
         $this->addFlash('success', "Félicitations ! Vous avez obtenu une certification pour le cursus : $courseName.");
     }
 
+    /**
+     * Validate lesson after clicking on the button.
+     *
+     * @param int $id The ID of the lesson
+     * @param LessonsRepository $lessonsRepository  Lesson Repository
+     * @param EntityManagerInterface $entityManager The Doctrine EntityManager for database operations.
+     * @param ValidatorInterface $validator Symfony component for validation
+     * 
+     * @return Response A response object that redirects or renders a template
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If the role ID provided does not exist. If the user isn't login redirect to login page.
+     */
 
-#[Route('/lesson/{id}/validate', name: 'app_lesson_validate')]
-public function validateLesson(
-    int $id,
-    LessonsRepository $lessonsRepository,
-    EntityManagerInterface $entityManager,
-    ValidatorInterface $validator
-): Response {
-    $user = $this->getUser();
-    if (!$user) {
-        return $this->redirectToRoute('app_login');
-    }
-
-    $lesson = $lessonsRepository->find($id);
-    if (!$lesson) {
-        throw $this->createNotFoundException('Leçon introuvable.');
-    }
-
-    // Vérifiez si l'utilisateur a déjà validé la leçon
-    $alreadyValidated = $entityManager->getRepository(Valid::class)
-        ->findOneBy(['user' => $user, 'lesson' => $lesson]);
-
-    if ($alreadyValidated) {
-        $this->addFlash('warning', 'Vous avez déjà validé cette leçon.');
-        return $this->redirectToRoute('app_lesson_access', ['id' => $id]);
-    }
-
-    // Créez une nouvelle validation
-    $valid = new Valid();
-    $valid->setUser($user)
-        ->setLesson($lesson)
-        ->setDateValidated(new \DateTimeImmutable());
-
-    $entityManager->persist($valid);
-    $entityManager->flush();
-
-    $this->addFlash('success', 'Leçon validée avec succès.');
-
-    // Vérifiez si toutes les leçons du cursus sont validées
-    $course = $lesson->getCourse();
-    $allLessons = $course->getLessons();
-
-    // Récupérez toutes les validations pour cet utilisateur dans ce cursus
-    $validatedLessons = $entityManager->getRepository(Valid::class)
-        ->findBy(['user' => $user]);
-
-        dump('Validated lessons:', $validatedLessons);
-
-        $validatedLessonIds = array_map(
-            fn($valid) => $valid->getLesson()->getId(),
-            $validatedLessons
-        );
-        
-        $allLessonIds = array_map(
-            fn($lesson) => $lesson->getId(),
-            $allLessons->toArray()
-        );
-        
-        if (count(array_diff($allLessonIds, $validatedLessonIds)) === 0) {
-            $this->addCertification($user, $course->getName(), $entityManager);
+    #[Route('/lesson/{id}/validate', name: 'app_lesson_validate')]
+    public function validateLesson(
+        int $id,
+        LessonsRepository $lessonsRepository,
+        EntityManagerInterface $entityManager,
+        ValidatorInterface $validator
+    ): Response {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
         }
 
-    return $this->redirectToRoute('app_lesson_access', ['id' => $id]);
+        $lesson = $lessonsRepository->find($id);
+        if (!$lesson) {
+            throw $this->createNotFoundException('Leçon introuvable.');
+        }
+
+        $alreadyValidated = $entityManager->getRepository(Valid::class)
+            ->findOneBy(['user' => $user, 'lesson' => $lesson]);
+
+        if ($alreadyValidated) {
+            $this->addFlash('warning', 'Vous avez déjà validé cette leçon.');
+            return $this->redirectToRoute('app_lesson_access', ['id' => $id]);
+        }
+
+        $valid = new Valid();
+        $valid->setUser($user)
+            ->setLesson($lesson)
+            ->setDateValidated(new \DateTimeImmutable());
+
+        $entityManager->persist($valid);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Leçon validée avec succès.');
+
+        $course = $lesson->getCourse();
+        $allLessons = $course->getLessons();
+
+        $validatedLessons = $entityManager->getRepository(Valid::class)
+            ->findBy(['user' => $user]);
+
+
+            $validatedLessonIds = array_map(
+                fn($valid) => $valid->getLesson()->getId(),
+                $validatedLessons
+            );
+            
+            $allLessonIds = array_map(
+                fn($lesson) => $lesson->getId(),
+                $allLessons->toArray()
+            );
+            
+            if (count(array_diff($allLessonIds, $validatedLessonIds)) === 0) {
+                $this->addCertification($user, $course->getName(), $entityManager);
+            }
+
+        return $this->redirectToRoute('app_lesson_access', ['id' => $id]);
+    }
 }
 
-
-
-}

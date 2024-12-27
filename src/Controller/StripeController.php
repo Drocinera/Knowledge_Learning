@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Repository\CoursesRepository;
 use App\Repository\LessonsRepository;
 use App\Entity\Users;
+
 use App\Services\StripeService;
 use App\Services\PurchaseManager;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +17,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * StripeController
+ *
+ * This controller manages Stripe external service , checkout, payment succes/cancel and recovery of information using the webhook.
+ */
 class StripeController extends AbstractController
 {
 
@@ -27,6 +34,21 @@ class StripeController extends AbstractController
         $this->stripeService = $stripeService;
     }
 
+    /**
+     * render a checkout page with price for the selected type : Lesson or cursus. .
+     *
+     * @param string $type The selected type of content.
+     * @param int $id the id of the selected content.
+     * @param CoursesRepository $coursesRepository The course Repository.
+     * @param LessonsRepository $lessonsRepository The Lesson Repository.
+     * @param StripeService $stripeService The external service for Stripe .
+     * @param SessionInterface $session The symfony component for session.
+     * 
+     * @return Response A response object that redirects or renders a template.
+     * 
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If the Lesson or the course does not exist.
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedException If user isn't login
+     */
 
     #[Route('/checkout/{type}/{id}', name: 'app_stripe_checkout')]
     public function checkout(
@@ -83,6 +105,14 @@ class StripeController extends AbstractController
         return $this->redirect($stripeSession->url);
     }
 
+    /**
+     * Renders the succes payement page with summary information
+     * 
+     * @param Request $request The HTTP request object containing user data.
+     *
+     * @return Response  A response object that redirects or renders a template.
+     */
+
     #[Route('/payment/success', name: 'app_payment_success')]
     public function success(Request $request): Response
     {
@@ -96,11 +126,28 @@ class StripeController extends AbstractController
         ]);
     }
 
+    /**
+     * Renders the cancel payement page
+     *
+     * @return Response  A response object that redirects or renders a template.
+     */
+
     #[Route('/payment/cancel', name: 'app_payment_cancel')]
     public function cancel(): Response
     {
         return $this->render('payment/cancel.html.twig');
     }
+
+    /**
+     * retrieves information from the Stripe Webhook to create a new entry in the “purchases” table
+     * 
+     * @param Request $request The HTTP request object containing user data.
+     * @param PurchaseManager $purchaseManager created Service for table "Pruchases" and "Comprise"
+     *
+     * @return Response  CCreate a valid entry in "purchases"
+     * 
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If error with webhook, metadata or invalid user
+     */
 
     #[Route('/stripe/webhook', name: 'stripe_webhook', methods: ['POST'])]
     public function stripeWebhook(Request $request, PurchaseManager $purchaseManager): Response

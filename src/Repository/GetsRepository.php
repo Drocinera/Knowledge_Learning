@@ -7,37 +7,25 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Repository class for managing the `Gets` entity.
+ * 
+ * This class provides methods for interacting with the `Gets` entity in the database.
+ * It extends the `ServiceEntityRepository` class provided by Doctrine to facilitate common database operations.
+ *
  * @extends ServiceEntityRepository<Gets>
  */
 class GetsRepository extends ServiceEntityRepository
 {
+    /**
+     * GetsRepository constructor.
+     * 
+     * The constructor accepts a `ManagerRegistry` which is used to access the Doctrine Entity Manager
+     * and configure the repository for the `Gets` entity.
+     *
+     * @param ManagerRegistry $registry The registry that holds the Doctrine manager.
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Gets::class);
     }
-
-    //    /**
-    //     * @return Gets[] Returns an array of Gets objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('g')
-    //            ->andWhere('g.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('g.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Gets
-    //    {
-    //        return $this->createQueryBuilder('g')
-    //            ->andWhere('g.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

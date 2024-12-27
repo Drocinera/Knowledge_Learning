@@ -6,11 +6,14 @@ use App\Repository\ThemesRepository;
 use App\Repository\CoursesRepository;
 use App\Repository\LessonsRepository;
 use App\Repository\CompriseRepository;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
+ * FormationController
+ * 
  * Controller for managing formations and related actions.
  */
 class FormationController extends AbstractController
@@ -18,8 +21,9 @@ class FormationController extends AbstractController
     /**
      * Renders the main formation page.
      *
-     * @return Response
+     * @return Response A response object that redirects or renders a template
      */
+
     #[Route('/formation', name: 'app_formation')]
     public function index(): Response
     {
@@ -35,9 +39,10 @@ class FormationController extends AbstractController
      * @param ThemesRepository $themesRepository Repository for themes.
      * @param CompriseRepository $compriseRepository Repository for checking access.
      * 
-     * @return Response
+     * @return Response A response object that redirects or renders a template
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If the formation is not found.
      */
+
     #[Route('/formation/{id}', name: 'app_formation_show')]
     public function show(
         int $id, 
@@ -83,9 +88,10 @@ class FormationController extends AbstractController
      * @param int $id The ID of the course.
      * @param CoursesRepository $coursesRepository Repository for courses.
      * 
-     * @return Response
+     * @return Response A response object that redirects or renders a template
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If the course is not found.
      */
+
     #[Route('/buy/course/{id}/summary', name: 'app_buy_course_summary')]
     public function buyCourseSummary(int $id, CoursesRepository $coursesRepository): Response
     {
@@ -106,9 +112,10 @@ class FormationController extends AbstractController
      * @param int $id The ID of the lesson.
      * @param LessonsRepository $lessonsRepository Repository for lessons.
      * 
-     * @return Response
+     * @return Response A response object that redirects or renders a template
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If the lesson is not found.
      */
+    
     #[Route('/buy/lesson/{id}/summary', name: 'app_buy_lesson_summary')]
     public function buyLessonSummary(int $id, LessonsRepository $lessonsRepository): Response
     {

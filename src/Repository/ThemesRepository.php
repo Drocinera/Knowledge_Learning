@@ -7,10 +7,24 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Repository class for managing the `Theles` entity.
+ * 
+ * This class provides methods for interacting with the `Themes` entity in the database.
+ * It extends the `ServiceEntityRepository` class provided by Doctrine to facilitate common database operations.
+ *
  * @extends ServiceEntityRepository<Themes>
  */
+
 class ThemesRepository extends ServiceEntityRepository
 {
+    /**
+     * ThemesRepository constructor.
+     * 
+     * The constructor accepts a `ManagerRegistry` which is used to access the Doctrine Entity Manager
+     * and configure the repository for the `Themes` entity.
+     *
+     * @param ManagerRegistry $registry The registry that holds the Doctrine manager.
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Themes::class);
@@ -20,29 +34,4 @@ class ThemesRepository extends ServiceEntityRepository
     {
         return $this->findAll();
     }
-
-    //    /**
-    //     * @return Themes[] Returns an array of Themes objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('t.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Themes
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

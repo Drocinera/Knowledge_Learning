@@ -7,37 +7,26 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Repository class for managing the `Purchases` entity.
+ * 
+ * This class provides methods for interacting with the `Purchases` entity in the database.
+ * It extends the `ServiceEntityRepository` class provided by Doctrine to facilitate common database operations.
+ *
  * @extends ServiceEntityRepository<Purchases>
  */
+
 class PurchasesRepository extends ServiceEntityRepository
 {
+    /**
+     * PurchasesRepository constructor.
+     * 
+     * The constructor accepts a `ManagerRegistry` which is used to access the Doctrine Entity Manager
+     * and configure the repository for the `Purchases` entity.
+     *
+     * @param ManagerRegistry $registry The registry that holds the Doctrine manager.
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Purchases::class);
     }
-
-    //    /**
-    //     * @return Purchases[] Returns an array of Purchases objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Purchases
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

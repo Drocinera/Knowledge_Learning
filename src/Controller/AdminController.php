@@ -26,7 +26,11 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-
+/**
+ * AdminController
+ *
+ * This controller manages admin actions: user, content, and purchase management.
+ */
 class AdminController extends AbstractController
 {
     private UserPasswordHasherInterface $passwordHasher;
@@ -36,14 +40,27 @@ class AdminController extends AbstractController
         $this->passwordHasher = $passwordHasher;
     }
 
+    /**
+     * Renders the main admin page with dashboard only accessible with admin role.
+     *
+     * @return Response
+     */
+
     #[Route('/admin', name: 'app_admin_dashboard')]
     public function index(): Response
     {
-        // Vérifie si l'utilisateur a le rôle ROLE_ADMIN
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         return $this->render('admin/index.html.twig');
     }
+
+    /**
+     * Displays all sign-in users .
+     *
+     * @param EntityManagerInterface $entityManager The Doctrine EntityManager for database operations.
+     * 
+     * @return Response A response object that redirects or renders a template
+     */
 
     #[Route('/admin/users', name: 'app_admin_users')]
     public function manageUsers(EntityManagerInterface $entityManager): Response
@@ -54,6 +71,17 @@ class AdminController extends AbstractController
             'users' => $users,
         ]);
     }
+
+    /**
+     * Adds a new user to the database.
+     *
+     * @param Request $request The HTTP request object containing user data.
+     * @param EntityManagerInterface $entityManager The Doctrine EntityManager for database operations.
+     * 
+     * @return Response A response object that redirects or renders a template.
+     * 
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If the role ID provided does not exist.
+     */
 
     #[Route('/admin/users/add', name: 'app_admin_add_user')]
     public function addUser(Request $request, EntityManagerInterface $entityManager): Response
@@ -93,6 +121,17 @@ class AdminController extends AbstractController
     ]);
 }
 
+    /**
+     * Edit a user.
+     *
+     * @param Request $request The HTTP request object containing user data.
+     * @param EntityManagerInterface $entityManager The Doctrine EntityManager for database operations.
+     * 
+     * @return Response A response object that redirects or renders a template.
+     * 
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If the user ID provided does not exist.
+     */
+
     #[Route('/admin/users/edit/{id}', name: 'app_admin_edit_user')]
     public function editUser(
         int $id, 
@@ -126,6 +165,19 @@ class AdminController extends AbstractController
             'roles' => $roles,
         ]);
     }
+
+    
+    /**
+     * delete a user.
+     *
+     * @param int $id The ID of the user..
+     * @param EntityManagerInterface $entityManager The Doctrine EntityManager for database operations.
+     * 
+     * @return Response A response object that redirects or renders a template.
+     * 
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If the user ID provided does not exist.
+     */
+
     #[Route('/admin/users/delete/{id}', name: 'app_admin_delete_user', methods: ['POST', 'DELETE'])]
     public function deleteUser(int $id, EntityManagerInterface $entityManager): Response
     {
@@ -143,6 +195,16 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('app_admin_users');
     }
 
+    
+    /**
+     * Display all content : theme, course and lesson.
+     *
+     * @param EntityManagerInterface $entityManager The Doctrine EntityManager for database operations.
+     * 
+     * @return Response A response object that redirects or renders a template.
+     * 
+     */
+
     #[Route('/admin/content', name: 'app_admin_content')]
     public function manageContent(EntityManagerInterface $entityManager): Response
     {
@@ -157,6 +219,18 @@ class AdminController extends AbstractController
         ]);
     }
 
+    
+    /**
+     * Add theme in the database.
+     *
+     * @param Request $request The HTTP request object containing user data.
+     * @param EntityManagerInterface $entityManager The Doctrine EntityManager for database operations.
+     * 
+     * @return Response A response object that redirects or renders a template.
+     * 
+     * @throws \Symfony\Component\HttpKernel\Exception\FileException If the image provided does not exist or have error.
+     */
+
     #[Route('/admin/content/themes/add', name: 'app_admin_add_theme')]
     public function addTheme(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -165,12 +239,12 @@ class AdminController extends AbstractController
         ->add('name', TextType::class, ['label' => 'Nom du Thème'])
         ->add('description', TextareaType::class, [
             'label' => 'Description',
-            'required' => false, // La description est facultative
+            'required' => false,
         ])
         ->add('image', FileType::class, [
             'label' => 'Image',
-            'mapped' => false, // Pour ne pas lier directement ce champ à l'entité
-            'required' => false, // L'image est facultative
+            'mapped' => false,
+            'required' => false,
         ])
         ->add('save', SubmitType::class, ['label' => 'Ajouter le Thème'])
         ->getForm();
@@ -183,22 +257,20 @@ class AdminController extends AbstractController
             if ($imageFile) {
                 $newFilename = uniqid() . '.' . $imageFile->guessExtension();
         
-                // Déplace le fichier vers le répertoire configuré
                 try {
                     $imageFile->move(
-                        $this->getParameter('images_directory'), // Définissez ce paramètre dans votre configuration
+                        $this->getParameter('images_directory'),
                         $newFilename
                     );
                 } catch (FileException $e) {
                     $this->addFlash('danger', 'Erreur lors de l\'upload de l\'image.');
                 }
         
-                // Met à jour le champ image de l'entité
                 $theme->setImage($newFilename);
             }
             
-            $theme->setCreatedBy($this->getUser()->getId()); // Utilisateur connecté
-            $theme->setUpdatedBy($this->getUser()->getId()); // Initialiser updated_by également
+            $theme->setCreatedBy($this->getUser()->getId());
+            $theme->setUpdatedBy($this->getUser()->getId());
         
             $entityManager->persist($theme);
             $entityManager->flush();
@@ -211,6 +283,19 @@ class AdminController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    
+    /**
+     * Edit a theme.
+     *
+     * @param Request $request The HTTP request object containing user data.
+     * @param EntityManagerInterface $entityManager The Doctrine EntityManager for database operations.
+     * 
+     * @return Response A response object that redirects or renders a template.
+     * 
+     * @throws \Symfony\Component\HttpKernel\Exception\FileException If the image provided does not exist or have error.
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundException If the theme provided does not exist.
+     */
 
     #[Route('/admin/content/themes/edit/{id}', name: 'app_admin_edit_theme')]
     public function editTheme(
@@ -256,11 +341,9 @@ class AdminController extends AbstractController
                     $this->addFlash('danger', 'Erreur lors de l\'upload de l\'image.');
                 }
 
-                // Mettre à jour le champ image de l'entité
                 $theme->setImage($newFilename);
             }
 
-            // Mettre à jour la date de modification et l'utilisateur
             $theme->setUpdatedAt(new \DateTimeImmutable());
             $theme->setUpdatedBy($this->getUser()->getId());
 
@@ -277,6 +360,16 @@ class AdminController extends AbstractController
         ]);
     }
 
+
+    /**
+     * Add a course in the database.
+     *
+     * @param Request $request The HTTP request object containing user data.
+     * @param EntityManagerInterface $entityManager The Doctrine EntityManager for database operations.
+     * 
+     * @return Response A response object that redirects or renders a template.
+     * 
+     */
 
     #[Route('/admin/content/courses/add', name: 'app_admin_add_course')]
     public function addCourse(Request $request, EntityManagerInterface $entityManager): Response
@@ -319,6 +412,19 @@ class AdminController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    
+    /**
+     * Edit a course.
+     *
+     * @param int $id The ID of the course.
+     * @param Request $request The HTTP request object containing user data.
+     * @param EntityManagerInterface $entityManager The Doctrine EntityManager for database operations.
+     * 
+     * @return Response A response object that redirects or renders a template.
+     * 
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If the course ID provided does not exist.
+     */
 
     #[Route('/admin/content/courses/edit/{id}', name: 'app_admin_edit_course')]
     public function editCourse(int $id, Request $request, EntityManagerInterface $entityManager): Response
@@ -366,6 +472,17 @@ class AdminController extends AbstractController
         ]);
     }
 
+    
+    /**
+     * Add a lesson in the database.
+     *
+     * @param Request $request The HTTP request object containing user data.
+     * @param EntityManagerInterface $entityManager The Doctrine EntityManager for database operations.
+     * 
+     * @return Response A response object that redirects or renders a template.
+     * 
+     */
+
     #[Route('/admin/content/lessons/add', name: 'app_admin_add_lesson')]
     public function addLesson(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -410,6 +527,18 @@ class AdminController extends AbstractController
         ]);
     }
 
+
+    /**
+     * Edit a user.
+     *
+     * @param int $id The ID of the lesson.
+     * @param Request $request The HTTP request object containing user data.
+     * @param EntityManagerInterface $entityManager The Doctrine EntityManager for database operations.
+     * 
+     * @return Response A response object that redirects or renders a template.
+     * 
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If the lesson ID provided does not exist.
+     */
 
     #[Route('/admin/content/lessons/edit/{id}', name: 'app_admin_edit_lesson')]
     public function editLesson(int $id, Request $request, EntityManagerInterface $entityManager): Response
@@ -458,6 +587,20 @@ class AdminController extends AbstractController
         ]);
     }
 
+    
+    /**
+     * Delete lesson, course or theme depending on the type selected in the dashboard.
+     *
+     * @param string $type The type of the selected content : Lesson, course or theme.
+     * @param int $id The ID of the type.
+     * @param Request $request The HTTP request object containing user data.
+     * @param EntityManagerInterface $entityManager The Doctrine EntityManager for database operations.
+     * 
+     * @return Response A response object that redirects or renders a template.
+     * 
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If the type or content provided does not exist.
+     */
+
     #[Route('/admin/content/delete/{type}/{id}', name: 'app_admin_delete')]
     public function deleteContent(string $type, int $id, EntityManagerInterface $entityManager): Response
     {
@@ -486,22 +629,27 @@ class AdminController extends AbstractController
     }
   
 
+    
+    /**
+     * Display all information purchase .
+     *
+     * @param EntityManagerInterface $entityManager The Doctrine EntityManager for database operations.
+     * 
+     * @return Response A response object that redirects or renders a template.
+     * 
+     */
+
     #[Route('/admin/purchases', name: 'app_admin_purchases')]
     public function managePurchases(EntityManagerInterface $entityManager): Response
 {
-    // Récupérer tous les achats
     $purchases = $entityManager->getRepository(Purchases::class)
-        ->findBy([], ['user' => 'ASC']); // Trier par utilisateur
+        ->findBy([], ['user' => 'ASC']); // sort by users
 
-    // Récupérer les Comprises associées à chaque achat
     $comprises = $entityManager->getRepository(Comprise::class)->findAll();
 
-    // Envoyer les données aux templates
     return $this->render('admin/purchases.html.twig', [
         'purchases' => $purchases,
         'comprises' => $comprises,
     ]);
 }
-
-
 }

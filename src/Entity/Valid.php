@@ -22,11 +22,22 @@ class Valid
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $date_validated = null;
 
+    /**
+     * Gets the user associated with this validation.
+     *
+     * @return Users|null The user entity .
+     */
     public function getUser(): ?Users
     {
         return $this->user;
     }
 
+    /**
+     * Sets the user associated with this validation.
+     *
+     * @param Users|null $user The user entity.
+     * @return self The current instance for method chaining.
+     */
     public function setUser(?Users $user): self
     {
         $this->user = $user;
@@ -34,11 +45,22 @@ class Valid
         return $this;
     }
 
+    /**
+     * Gets the lesson associated with this validation.
+     *
+     * @return Lessons|null The lesson entity .
+     */
     public function getLesson(): ?Lessons
     {
         return $this->lesson;
     }
 
+    /**
+     * Sets the lesson associated with this validation.
+     *
+     * @param Lessons|null $lesson The lesson entity.
+     * @return self The current instance for method chaining.
+     */
     public function setLesson(?Lessons $lesson): self
     {
         $this->lesson = $lesson;
@@ -46,11 +68,22 @@ class Valid
         return $this;
     }
 
+    /**
+     * Gets the date when the validation occurred.
+     *
+     * @return \DateTimeImmutable|null The date of validation .
+     */
     public function getDateValidated(): ?\DateTimeImmutable
     {
         return $this->date_validated;
     }
 
+    /**
+     * Sets the date when the validation occurred.
+     *
+     * @param \DateTimeImmutable|null $date_validated The validation date.
+     * @return self The current instance for method chaining.
+     */
     public function setDateValidated(?\DateTimeImmutable $date_validated): self
     {
         $this->date_validated = $date_validated;

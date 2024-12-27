@@ -7,37 +7,25 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Repository class for managing the `Certifications` entity.
+ * 
+ * This class is responsible for querying and interacting with the `Certifications` entities in the database.
+ * It extends the `ServiceEntityRepository` class provided by Doctrine to simplify common database operations.
+ *
  * @extends ServiceEntityRepository<Certifications>
  */
 class CertificationsRepository extends ServiceEntityRepository
 {
+    /**
+     * CertificationsRepository constructor.
+     * 
+     * The constructor accepts a `ManagerRegistry` which is used to access the Doctrine Entity Manager
+     * and configure the repository for the `Certifications` entity.
+     *
+     * @param ManagerRegistry $registry The registry that holds the Doctrine manager.
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Certifications::class);
     }
-
-    //    /**
-    //     * @return Certifications[] Returns an array of Certifications objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Certifications
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

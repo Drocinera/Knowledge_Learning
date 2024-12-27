@@ -4,25 +4,46 @@ namespace App\Controller;
 
 use App\Entity\Users;
 use App\Entity\Role;
+
 use App\Form\RegistrationFormType;
+
 use App\Security\EmailVerifier;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
+/**
+ * RegistatrionController
+ *
+ * This controller manages registration page and verify email.
+ */
 class RegistrationController extends AbstractController
 {
     public function __construct(private EmailVerifier $emailVerifier)
     {
     }
+
+    /**
+     * Renders the main register page and send a confirmation email after sign-in.
+     * @param Request $request The HTTP request object containing user data.
+     * @param EntityManagerInterface $entityManager The Doctrine EntityManager for database operations.
+     * @param UserPasswordHasherInterface $userPasswordHasher The symfony component for password hashing.
+     * @param Security $security The bundle symfony for security for register, login and other.
+     * 
+     * @return Response A response object that redirects or renders a template
+     * 
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If the role does not exist.
+     */
 
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response
@@ -35,21 +56,15 @@ class RegistrationController extends AbstractController
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
 
-            // encode the plain password
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
-
-            // Récupérer le rôle ROLE_USER depuis la base de données
             $roleRepository = $entityManager->getRepository(Role::class);
-            $role = $roleRepository->findOneBy(['name' => 'ROLE_USER']); // ou 'ROLE_ADMIN' selon votre logique
+            $role = $roleRepository->findOneBy(['name' => 'ROLE_USER']);
 
             if ($role) {
-                $user->setRole($role); // Assigner le rôle à l'utilisateur
+                $user->setRole($role);
             } else {
-                // Si le rôle n'existe pas dans la base de données, vous pouvez gérer l'erreur ou en créer un
                 throw new \Exception("Role not found");
             }
-
-            // Sauvegarder l'utilisateur avec le rôle
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -62,8 +77,6 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 
-            // do anything else you need here, like send an email
-
             return $security->login($user, 'form_login', 'main');
         }
 
@@ -71,6 +84,16 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
+
+    /**
+     * Function for verify email.
+     * @param Request $request The HTTP request object containing user data.
+     * @param TranslatorInterface $translator The symfony contract for auto translate
+     * 
+     * @return Response A response object that redirects or renders a template
+     * 
+     * @throws \Symfony\Component\HttpKernel\Exception\VerifyEmailExceptionInterface If the email verifier  have a problem.
+     */
 
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
