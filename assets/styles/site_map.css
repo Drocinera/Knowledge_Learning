@@ -1,0 +1,12 @@
+.site_map_container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 2em;
+}
+
+.site_map_paragraph {
+    display: flex;
+    flex-direction: row;
+}
