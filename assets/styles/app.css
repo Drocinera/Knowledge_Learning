@@ -4,7 +4,7 @@ body {
 }
 
 * {
-    font-family: 'Comic sans MS';
+    font-family: 'Comic sans MS' !important;
 }
 
 h2, h3, h4, h5 {
