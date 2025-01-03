@@ -49,6 +49,20 @@ Create the .env file and configure the following variables:
 • STRIPE_WEBHOOK_SECRET
 • MAILER_DSN
 
+Create the .env.test and configure the following variables :
+• KERNEL_CLASS
+• APP_SECRET
+• APP_ENV
+• DATABASE_URL
+• SYMFONY_DEPRECATIONS_HELPER
+• PANTHER_APP_ENV
+• PANTHER_ERROR_SCREENSHOT_DIR
+• MESSENGER_TRANSPORT_DSN
+• MAILER_DSN
+• STRIPE_PUBLIC_KEY
+• STRIPE_SECRET_KEY
+• STRIPE_WEBHOOK_SECRET
+
 ## 4.4. Creating the database
 
 symfony console doctrine:database:create
@@ -77,6 +91,9 @@ MAILER_DSN =
 > - If you are using Gmail, you will need to set an app password or allow access to less secure apps.
 
 > - Replace <username>, <password> and <darabase_name> with your own information.
+
+- For .env.test : 
+DATABASE_URL="mysql://username:password@127.0.0.1:3306/database_name
 
 ## 6. Usage
 
