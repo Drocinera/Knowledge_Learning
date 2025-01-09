@@ -40,11 +40,11 @@ class RegistrationFormType extends AbstractType
                         'minMessage' => 'Votre mot de passe doit contenir au minimum {{ limit }} caractères',
                         'max' => 4096,
                     ]),
-                ],
                     new Regex([
                         'pattern' => '/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/',
                         'message' => 'Le mot de passe doit contenir au moins une majuscule, un chiffre, et un caractère spécial parmis ceux listé : (@$!%*?&).',
-                ]),
+                    ]),
+                ],
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'label' => 'Accepter les termes',
