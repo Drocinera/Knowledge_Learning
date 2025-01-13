@@ -4,47 +4,74 @@ namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * Class LoginControllerTest
+ * 
+ * This class contains tests for verifying the functionality of the login system,
+ * including loading the login page, logging in with valid and invalid credentials,
+ * and handling redirections and error messages.
+ */
 class LoginControllerTest extends WebTestCase
 {
+    /**
+     * Test if the login page loads successfully.
+     *
+     * @return void
+     */
     public function testLoginPageLoads(): void
     {
         $client = static::createClient();
 
-        // Accéder à la page de connexion
+        // Access the login page
         $crawler = $client->request('GET', '/login');
 
-        // Vérifier que la page de connexion se charge correctement
+        // Assert that the login page loads correctly
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Veuillez vous connecter');
     }
 
+    /**
+     * Test logging in with valid credentials.
+     *
+     * This test simulates a user submitting valid login credentials,
+     * verifies redirection to the homepage, and checks if the user is successfully logged in.
+     *
+     * @return void
+     */
     public function testLoginWithValidCredentials(): void
     {
         $client = static::createClient();
 
-        // Soumettre le formulaire avec des identifiants valides
+        // Submit the login form with valid credentials
         $crawler = $client->request('GET', '/login');
         $form = $crawler->selectButton('Se connecter')->form([
-            '_username' => 'fakeuser@fakemail.com', // Email de l'utilisateur dans votre base de test
-            '_password' => 'userpassword',        // Mot de passe correspondant
+            '_username' => 'fakeuser@fakemail.com', // User's email in the test database
+            '_password' => 'userpassword',         // Corresponding password
         ]);
 
         $client->submit($form);
 
-
-        // Vérifier la redirection vers la page d'accueil après connexion réussie
-        $this->assertResponseRedirects('/'); 
+        // Assert redirection to the homepage after successful login
+        $this->assertResponseRedirects('/');
         $client->followRedirect();
 
-        // Vérifier que l'utilisateur est bien connecté
-        $this->assertSelectorExists('a[href="/logout"]'); // Vérifie que le lien de déconnexion est visible
+        // Assert that the user is logged in by checking for the logout link
+        $this->assertSelectorExists('a[href="/logout"]');
     }
 
+    /**
+     * Test logging in with invalid credentials.
+     *
+     * This test simulates a user submitting invalid login credentials,
+     * verifies redirection back to the login page, and checks for an error message.
+     *
+     * @return void
+     */
     public function testLoginWithInvalidCredentials(): void
     {
         $client = static::createClient();
 
-        // Soumettre le formulaire avec des identifiants invalides
+        // Submit the login form with invalid credentials
         $crawler = $client->request('GET', '/login');
         $form = $crawler->selectButton('Se connecter')->form([
             '_username' => 'wronguser@example.com',
@@ -53,10 +80,11 @@ class LoginControllerTest extends WebTestCase
 
         $client->submit($form);
 
-        // Vérifier que la connexion échoue, renvoie vers la page de connexion et qu'une erreur est affichée
+        // Assert redirection back to the login page
         $this->assertResponseRedirects('/login');
         $client->followRedirect();
 
+        // Assert that an error message is displayed
         $this->assertSelectorTextContains('.alert-danger', 'Invalid credentials.');
     }
 }
