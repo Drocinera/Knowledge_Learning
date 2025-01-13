@@ -10,5 +10,11 @@
     {{ form_row(form.theme) }}
 {{ form_end(form) }}
 
+{% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
 <a href="{{ path('app_admin_content') }}">Retour</a>
 {% endblock %}

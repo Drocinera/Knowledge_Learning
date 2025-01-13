@@ -10,6 +10,18 @@
 
 {{ form_end(form) }}
 
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% for message in app.flashes('danger') %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+{% endfor %}
+
 <a href="{{ path('app_admin_content') }}" class="btn btn-secondary">Retour à la liste</a>
 {% endblock %}
 

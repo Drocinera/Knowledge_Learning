@@ -1,3 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
 <form method="post">
     <div>
         <label for="email">Email :</label>
@@ -22,3 +26,13 @@
 
     <button type="submit">Mettre à jour</button>
 </form>
+
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% endblock %}
+
+

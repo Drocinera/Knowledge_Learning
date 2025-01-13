@@ -63,7 +63,16 @@
             {% else %}
                 <a href="{{ path('app_lesson_validate', { id: lesson.id }) }}" class="btn btn-primary">Terminer la leçon</a>
             {% endif %}
-    {% endif %}
+        {% endif %}
+        
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+        <button onclick="history.go(-1);"><i class="fas fa-arrow-left"></i> Retour à la page formaiton</button>
     </div>
 </div>
 {% endblock %}

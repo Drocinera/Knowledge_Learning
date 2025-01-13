@@ -80,6 +80,8 @@ class RegistrationController extends AbstractController
             return $security->login($user, 'form_login', 'main');
         }
 
+        $this->addFlash('info', 'Un email de vérification a été envoyer pour confirmer votre mail');
+
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
