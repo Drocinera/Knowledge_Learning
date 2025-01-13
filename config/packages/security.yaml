@@ -19,7 +19,7 @@ security:
         main:
             lazy: true
             stateless: false
-            provider: app_user_provider  # Utilisation du fournisseur de base de données
+            provider: app_user_provider  # Using the database provider
             form_login:
                 login_path: app_login
                 check_path: app_login
@@ -27,11 +27,11 @@ security:
                 enable_csrf: true
             logout:
                 path: app_logout
-                target: app_home # Redirection après déconnexion
+                target: app_home # Redirection after logout
 
             remember_me:
                 secret: '%kernel.secret%'
-                lifetime: 604800 # Durée de vie en secondes (1 semaine)
+                lifetime: 604800 # Lifespan in seconds (1 week)
                 # Uncomment the following line to always remember the user:
                 # always_remember_me: true
 
