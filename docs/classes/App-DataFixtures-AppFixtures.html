@@ -120,15 +120,15 @@
                                 <section>
                                         <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/app.html">App</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/app-form.html">Form</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/app-datafixtures.html">DataFixtures</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    RegistrationFormType
+    AppFixtures
 
         <span class="phpdocumentor-element__extends">
-        extends <abbr title="\Symfony\Component\Form\AbstractType">AbstractType</abbr>
+        extends <abbr title="\Doctrine\Bundle\FixturesBundle\Fixture">Fixture</abbr>
     </span>
     
             <div class="phpdocumentor-element__package">
@@ -147,9 +147,9 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Form/RegistrationFormType.php"><a href="files/src-form-registrationformtype.html"><abbr title="src/Form/RegistrationFormType.php">RegistrationFormType.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/DataFixtures/AppFixtures.php"><a href="files/src-datafixtures-appfixtures.html"><abbr title="src/DataFixtures/AppFixtures.php">AppFixtures.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">17</span>
+    <span class="phpdocumentor-element-found-in__line">15</span>
 
     </aside>
 
@@ -164,7 +164,7 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/App-Form-RegistrationFormType.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/App-DataFixtures-AppFixtures.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -176,21 +176,34 @@
 
 
 
+<h4 id="toc-properties">
+    Properties
+    <a href="classes/App-DataFixtures-AppFixtures.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/App-DataFixtures-AppFixtures.html#property_passwordHasher">$passwordHasher</a>
+    <span>
+                        &nbsp;: <abbr title="\Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface">UserPasswordHasherInterface</abbr>            </span>
+</dt>
+
+    </dl>
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/App-Form-RegistrationFormType.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/App-DataFixtures-AppFixtures.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/App-Form-RegistrationFormType.html#method_buildForm">buildForm()</a>
+    <a class="" href="classes/App-DataFixtures-AppFixtures.html#method___construct">__construct()</a>
     <span>
-                                &nbsp;: void    </span>
+                                &nbsp;: mixed    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/App-Form-RegistrationFormType.html#method_configureOptions">configureOptions()</a>
+    <a class="" href="classes/App-DataFixtures-AppFixtures.html#method_load">load()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
@@ -202,11 +215,54 @@
         
 
         
+    <section class="phpdocumentor-properties">
+        <h3 class="phpdocumentor-elements__header" id="properties">
+            Properties
+            <a href="classes/App-DataFixtures-AppFixtures.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h3>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_passwordHasher">
+        $passwordHasher
+        <a href="classes/App-DataFixtures-AppFixtures.html#property_passwordHasher" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/DataFixtures/AppFixtures.php"><a href="files/src-datafixtures-appfixtures.html"><abbr title="src/DataFixtures/AppFixtures.php">AppFixtures.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">17</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface">UserPasswordHasherInterface</abbr></span>
+    <span class="phpdocumentor-signature__name">$passwordHasher</span>
+    </code>
+
+    
+    
+    
+
+    
+
+</article>
+            </section>
 
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/App-Form-RegistrationFormType.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/App-DataFixtures-AppFixtures.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -215,13 +271,13 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_buildForm">
-        buildForm()
-        <a href="classes/App-Form-RegistrationFormType.html#method_buildForm" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method___construct">
+        __construct()
+        <a href="classes/App-DataFixtures-AppFixtures.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Form/RegistrationFormType.php"><a href="files/src-form-registrationformtype.html"><abbr title="src/Form/RegistrationFormType.php">RegistrationFormType.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/DataFixtures/AppFixtures.php"><a href="files/src-datafixtures-appfixtures.html"><abbr title="src/DataFixtures/AppFixtures.php">AppFixtures.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">19</span>
 
@@ -230,7 +286,7 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">buildForm</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\Form\FormBuilderInterface">FormBuilderInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$builder</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface">UserPasswordHasherInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$passwordHasher</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -239,15 +295,8 @@
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$builder</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\Form\FormBuilderInterface">FormBuilderInterface</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$options</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                <span class="phpdocumentor-signature__argument__name">$passwordHasher</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface">UserPasswordHasherInterface</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -266,22 +315,22 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_configureOptions">
-        configureOptions()
-        <a href="classes/App-Form-RegistrationFormType.html#method_configureOptions" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_load">
+        load()
+        <a href="classes/App-DataFixtures-AppFixtures.html#method_load" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Form/RegistrationFormType.php"><a href="files/src-form-registrationformtype.html"><abbr title="src/Form/RegistrationFormType.php">RegistrationFormType.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/DataFixtures/AppFixtures.php"><a href="files/src-datafixtures-appfixtures.html"><abbr title="src/DataFixtures/AppFixtures.php">AppFixtures.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">24</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">configureOptions</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\OptionsResolver\OptionsResolver">OptionsResolver</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$resolver</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">load</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Doctrine\Persistence\ObjectManager">ObjectManager</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$manager</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -290,8 +339,8 @@
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$resolver</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\OptionsResolver\OptionsResolver">OptionsResolver</abbr></span>
+                <span class="phpdocumentor-signature__argument__name">$manager</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Doctrine\Persistence\ObjectManager">ObjectManager</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -310,7 +359,7 @@
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Form/RegistrationFormType.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/DataFixtures/AppFixtures.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -409,16 +458,23 @@
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                                                <li><a href="classes/App-Form-RegistrationFormType.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/App-DataFixtures-AppFixtures.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/App-DataFixtures-AppFixtures.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
             
+                            <li class="phpdocumentor-on-this-page-section__title">Properties</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/App-DataFixtures-AppFixtures.html#property_passwordHasher">$passwordHasher</a></li>
+                                            </ul>
+                </li>
             
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li class=""><a href="classes/App-Form-RegistrationFormType.html#method_buildForm">buildForm()</a></li>
-                                            <li class=""><a href="classes/App-Form-RegistrationFormType.html#method_configureOptions">configureOptions()</a></li>
+                                            <li class=""><a href="classes/App-DataFixtures-AppFixtures.html#method___construct">__construct()</a></li>
+                                            <li class=""><a href="classes/App-DataFixtures-AppFixtures.html#method_load">load()</a></li>
                                     </ul>
             </li>
                     </ul>
@@ -438,7 +494,7 @@
     </section>
 </section>
         </div>
-        <a href="classes/App-Form-RegistrationFormType.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/App-DataFixtures-AppFixtures.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

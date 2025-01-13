@@ -306,70 +306,25 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-StripeController.html#property_stripeService"
         },                {
-            "fqsen": "\\App\\DataFixtures\\CoursesFixture",
-            "name": "CoursesFixture",
+            "fqsen": "\\App\\DataFixtures\\AppFixtures",
+            "name": "AppFixtures",
             "summary": "",
-            "url": "classes/App-DataFixtures-CoursesFixture.html"
+            "url": "classes/App-DataFixtures-AppFixtures.html"
         },                {
-            "fqsen": "\\App\\DataFixtures\\CoursesFixture\u003A\u003Aload\u0028\u0029",
-            "name": "load",
-            "summary": "",
-            "url": "classes/App-DataFixtures-CoursesFixture.html#method_load"
-        },                {
-            "fqsen": "\\App\\DataFixtures\\LessonsFixture",
-            "name": "LessonsFixture",
-            "summary": "",
-            "url": "classes/App-DataFixtures-LessonsFixture.html"
-        },                {
-            "fqsen": "\\App\\DataFixtures\\LessonsFixture\u003A\u003Aload\u0028\u0029",
-            "name": "load",
-            "summary": "",
-            "url": "classes/App-DataFixtures-LessonsFixture.html#method_load"
-        },                {
-            "fqsen": "\\App\\DataFixtures\\RolesFixture",
-            "name": "RolesFixture",
-            "summary": "",
-            "url": "classes/App-DataFixtures-RolesFixture.html"
-        },                {
-            "fqsen": "\\App\\DataFixtures\\RolesFixture\u003A\u003Aload\u0028\u0029",
-            "name": "load",
-            "summary": "",
-            "url": "classes/App-DataFixtures-RolesFixture.html#method_load"
-        },                {
-            "fqsen": "\\App\\DataFixtures\\ThemesFixture",
-            "name": "ThemesFixture",
-            "summary": "",
-            "url": "classes/App-DataFixtures-ThemesFixture.html"
-        },                {
-            "fqsen": "\\App\\DataFixtures\\ThemesFixture\u003A\u003Aload\u0028\u0029",
-            "name": "load",
-            "summary": "",
-            "url": "classes/App-DataFixtures-ThemesFixture.html#method_load"
-        },                {
-            "fqsen": "\\App\\DataFixtures\\ThemesFixture\u003A\u003ATHEMES",
-            "name": "THEMES",
-            "summary": "",
-            "url": "classes/App-DataFixtures-ThemesFixture.html#constant_THEMES"
-        },                {
-            "fqsen": "\\App\\DataFixtures\\UsersFixture",
-            "name": "UsersFixture",
-            "summary": "",
-            "url": "classes/App-DataFixtures-UsersFixture.html"
-        },                {
-            "fqsen": "\\App\\DataFixtures\\UsersFixture\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\App\\DataFixtures\\AppFixtures\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "",
-            "url": "classes/App-DataFixtures-UsersFixture.html#method___construct"
+            "url": "classes/App-DataFixtures-AppFixtures.html#method___construct"
         },                {
-            "fqsen": "\\App\\DataFixtures\\UsersFixture\u003A\u003Aload\u0028\u0029",
+            "fqsen": "\\App\\DataFixtures\\AppFixtures\u003A\u003Aload\u0028\u0029",
             "name": "load",
             "summary": "",
-            "url": "classes/App-DataFixtures-UsersFixture.html#method_load"
+            "url": "classes/App-DataFixtures-AppFixtures.html#method_load"
         },                {
-            "fqsen": "\\App\\DataFixtures\\UsersFixture\u003A\u003A\u0024passwordHasher",
+            "fqsen": "\\App\\DataFixtures\\AppFixtures\u003A\u003A\u0024passwordHasher",
             "name": "passwordHasher",
             "summary": "",
-            "url": "classes/App-DataFixtures-UsersFixture.html#property_passwordHasher"
+            "url": "classes/App-DataFixtures-AppFixtures.html#property_passwordHasher"
         },                {
             "fqsen": "\\App\\Entity\\Certifications",
             "name": "Certifications",
