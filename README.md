@@ -92,7 +92,7 @@ MAILER_DSN =
 
 > - If you are using Gmail, you will need to set an app password or allow access to less secure apps.
 
-> - Replace <username>, <password> and <darabase_name> with your own information.
+> - Replace username, password and database_name with your own information.
 
 - For .env.test : 
 DATABASE_URL="mysql://username:password@127.0.0.1:3306/database_name
