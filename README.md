@@ -67,9 +67,9 @@ Create the .env.test and configure the following variables :
 
 ## 4.4. Creating the database
 
-symfony console doctrine:database:create
-symfony console doctrine:migrations:migrate
-Symfony console doctrine:fixtures:load
+- symfony console doctrine:database:create
+- symfony console doctrine:migrations:migrate
+- Symfony console doctrine:fixtures:load
 
 ## 4.5. Starting the server
 
