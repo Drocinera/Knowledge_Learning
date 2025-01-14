@@ -41,29 +41,29 @@ composer install
 
 Create the .env file and configure the following variables:
 
-• APP_ENV 
-• APP_SECRET 
-• DATABASE_URL 
-• MESSENGER_TRANSPORT_DSN 
-• STRIPE_PUBLIC_KEY 
-• STRIPE_SECRET_KEY 
-• STRIPE_WEBHOOK_SECRET 
-• MAILER_DSN 
+- APP_ENV 
+- APP_SECRET 
+- DATABASE_URL 
+- MESSENGER_TRANSPORT_DSN 
+- STRIPE_PUBLIC_KEY 
+- STRIPE_SECRET_KEY 
+- STRIPE_WEBHOOK_SECRET 
+- MAILER_DSN 
 
 Create the .env.test and configure the following variables :
 
-• KERNEL_CLASS 
-• APP_SECRET 
-• APP_ENV 
-• DATABASE_URL 
-• SYMFONY_DEPRECATIONS_HELPER 
-• PANTHER_APP_ENV 
-• PANTHER_ERROR_SCREENSHOT_DIR 
-• MESSENGER_TRANSPORT_DSN 
-• MAILER_DSN 
-• STRIPE_PUBLIC_KEY 
-• STRIPE_SECRET_KEY 
-• STRIPE_WEBHOOK_SECRET 
+- KERNEL_CLASS 
+- APP_SECRET 
+- APP_ENV 
+- DATABASE_URL 
+- SYMFONY_DEPRECATIONS_HELPER 
+- PANTHER_APP_ENV 
+- PANTHER_ERROR_SCREENSHOT_DIR 
+- MESSENGER_TRANSPORT_DSN 
+- MAILER_DSN 
+- STRIPE_PUBLIC_KEY 
+- STRIPE_SECRET_KEY 
+- STRIPE_WEBHOOK_SECRET 
 
 ## 4.4. Creating the database
 
@@ -131,14 +131,14 @@ The Admin page located in the drop-down menu allows:
 
 ## 7. Project structure
 
-• src/Controller/: Action management.
-• src/Entity/: Management of tables in the database
-• src/Service/: Services like StripeService.
-• templates/: HTML templates with Twig.
+- src/Controller/: Action management.
+- src/Entity/: Management of tables in the database
+- src/Service/: Services like StripeService.
+- templates/: HTML templates with Twig.
 
 9. Main features
 
-• E-learning training
-• Purchase, visualization and validation of training
-• Secure payment with Stripe
-• Obtaining certification
+- E-learning training
+- Purchase, visualization and validation of training
+- Secure payment with Stripe
+- Obtaining certification
