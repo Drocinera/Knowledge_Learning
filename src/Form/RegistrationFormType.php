@@ -14,6 +14,8 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
+use Gregwar\CaptchaBundle\Type\CaptchaType;
+
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -53,6 +55,7 @@ class RegistrationFormType extends AbstractType
                     new IsTrue(['message' => 'Vous devez accepter les termes.']),
                 ],
             ]);
+        $builder->add('captcha', CaptchaType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

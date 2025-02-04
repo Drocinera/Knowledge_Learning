@@ -19,8 +19,12 @@
             {'label': 'Confirmation du mot de passe', 'label_attr': {'class': 'label-form'}}) }}
         {{ form_row(registrationForm.agreeTerms, {'label_attr': {'class': 'label-form'}}) }}
 
+        {{ form_row(registrationForm.captcha) }}
+
         <button type="submit" class="btn">S'inscrire</button>
     </div>
+
+
     {{ form_end(registrationForm) }}
 
     {% for message in app.flashes('info') %}
