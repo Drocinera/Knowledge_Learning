@@ -21,11 +21,15 @@
                                 <p><strong class="text-decoration-underline">Prix pour la leçon individuelle</strong> : <mark>{{ lesson.price }}</mark> €</p>
                                 
                                 {% if is_granted('ROLE_USER') %}
+                                {% if app.user.isActive %}
                                     {% set accessKey = 'lesson_' ~ lesson.id %}
                                     {% if accessMap[accessKey] is defined and accessMap[accessKey] %}
                                         <a href="{{ path('app_lesson_access', {id: lesson.id}) }}" class="btn-access-lesson">Accéder à "{{ lesson.name }}"</a>
                                     {% else %}
                                         <a href="{{ path('app_stripe_checkout', {type: 'lesson', id: lesson.id}) }}" class="btn">Acheter "{{ lesson.name }}"</a>
+                                    {% endif %}
+                                    {% else %}
+                                        <p class="text-danger">Vous devez valider votre adresse email avant de pouvoir acheter du contenu.</p>
                                     {% endif %}
                                 {% else %}
                                     <p>Connectez-vous pour accéder ou acheter.</p>
@@ -36,6 +40,7 @@
                     <div class="course-buy-button">
                     {% set accessKey = 'course_' ~ course.id %}
                     {% if is_granted('ROLE_USER') %}
+                    {% if app.user.isActive %}
                         {% if accessMap[accessKey] is defined and accessMap[accessKey] %}
                             <a href="{{ path('app_course_access', {id: course.id}) }}" class="btn-access-course display-1">
                                 Accéder au cursus
@@ -44,6 +49,9 @@
                             <a href="{{ path('app_stripe_checkout', {type: 'course', id: course.id}) }}" class="btn btn-primary display-1">
                                 Acheter le cursus
                             </a>
+                        {% endif %}
+                        {% else %}
+                            <p class="text-danger">Vous devez valider votre adresse email avant de pouvoir acheter du contenu.</p>
                         {% endif %}
                     {% else %}
                         <p>Pour effectuer un achat, connectez-vous.</p>

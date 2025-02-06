@@ -113,6 +113,9 @@ Training page: Access to training available on the site
 - If you are logged in without having validated your email, you will not be able to purchase training or lessons
 - If you have validated your email, you will be able to purchase, view and validate training or a lesson.
 
+For validating an email, after register an account with a true email, use the following command line for sending the email verifier : 
+- php bin/console messenger:consume --all
+
 Certifications page: Summarizes all certifications obtained with their date of obtaining.
 
 - To make a payment, use the test bank cards provided by Stripe (https://docs.stripe.com/testing?locale=fr-FR)
@@ -136,7 +139,7 @@ The Admin page located in the drop-down menu allows:
 - src/Service/: Services like StripeService.
 - templates/: HTML templates with Twig.
 
-9. Main features
+## 9. Main features
 
 - E-learning training
 - Purchase, visualization and validation of training
