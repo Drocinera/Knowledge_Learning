@@ -19,7 +19,7 @@
         {% endfor %}
 
 <!-- Theme management -->
-<h2>Thèmes</h2>
+<h2 class="title-content-admin">Thèmes</h2>
 
 <div class="table-containeur">
     <div class="table-content-theme">
@@ -38,9 +38,9 @@
                     <td class="table-case-content">{{ theme.id }}</td>
                     <td class="table-case-content">{{ theme.name }}</td>
                     <td class="table-case-content">{{ theme.description }}</td>
-                    <td class="table-case-content">
-                        <a href="{{ path('app_admin_edit_theme', {id: theme.id}) }}">Modifier</a>
-                        <a href="{{ path('app_admin_delete', { type: 'theme', id: theme.id }) }}" 
+                    <td class="table-button-action">
+                        <a class="button-change-admin" href="{{ path('app_admin_edit_theme', {id: theme.id}) }}">Modifier</a>
+                        <a class="button-supp-admin" href="{{ path('app_admin_delete', { type: 'theme', id: theme.id }) }}" 
                             onclick="return confirm('Supprimer ce thème ?');">
                             Supprimer
                         </a>
@@ -49,11 +49,11 @@
                 {% endfor %}
             </tbody>
         </table>
-        <a href="{{ path('app_admin_add_theme') }}">Ajouter un thème</a>
+        <a class="button-add-admin" href="{{ path('app_admin_add_theme') }}">Ajouter un thème</a>
     </div>
 
 <!-- courses management -->
-<h2>Cursus</h2>
+<h2 class="title-content-admin">Cursus</h2>
     <div class="table-content-cursus">
         <table>
             <thead>
@@ -70,9 +70,9 @@
                     <td>{{ course.id }}</td>
                     <td>{{ course.name }}</td>
                     <td>{{ course.theme.name }}</td>
-                    <td>
-                        <a href="{{ path('app_admin_edit_course', {id: course.id}) }}">Modifier</a>
-                        <a href="{{ path('app_admin_delete', { type: 'course', id: course.id }) }}" 
+                    <td class="table-button-action">
+                        <a class="button-change-admin" href="{{ path('app_admin_edit_course', {id: course.id}) }}">Modifier</a>
+                        <a class="button-supp-admin" href="{{ path('app_admin_delete', { type: 'course', id: course.id }) }}" 
                             onclick="return confirm('Supprimer ce cursus ?');">
                             Supprimer
                         </a>
@@ -81,11 +81,11 @@
                 {% endfor %}
             </tbody>
         </table>
-        <a href="{{ path('app_admin_add_course') }}">Ajouter un cursus</a>
+        <a class="button-add-admin" href="{{ path('app_admin_add_course') }}">Ajouter un cursus</a>
     </div>
 
 <!-- Lessons management -->
-<h2>Leçons</h2>
+<h2 class="title-content-admin">Leçons</h2>
     <div>
         <table class="table-content-lesson">
             <thead>
@@ -102,9 +102,9 @@
                     <td>{{ lesson.id }}</td>
                     <td>{{ lesson.name }}</td>
                     <td>{{ lesson.course.name }}</td>
-                    <td>
-                        <a href="{{ path('app_admin_edit_lesson', {id: lesson.id}) }}">Modifier</a>
-                        <a href="{{ path('app_admin_delete', { type: 'lesson', id: lesson.id }) }}" 
+                    <td class="table-button-action">
+                        <a class="button-change-admin" href="{{ path('app_admin_edit_lesson', {id: lesson.id}) }}">Modifier</a>
+                        <a class="button-supp-admin" href="{{ path('app_admin_delete', { type: 'lesson', id: lesson.id }) }}" 
                             onclick="return confirm('Supprimer cette leçon ?');">
                             Supprimer
                         </a>
@@ -113,10 +113,10 @@
                 {% endfor %}
             </tbody>
         </table>
-        <a href="{{ path('app_admin_add_lesson') }}">Ajouter une leçon</a>
+        <a class="button-add-admin" href="{{ path('app_admin_add_lesson') }}">Ajouter une leçon</a>
     <div>
 
-    <div>
+    <div class="back-to-admin">
         <a href="{{ path('app_admin_dashboard') }}" class="btn btn-primary">Retour aux menu administrateur</a>
     <div>
 </div>

@@ -1,0 +1,97 @@
+.list-action-admin {
+    display: flex;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.button-action-admin {
+    -webkit-border-radius: 32;
+    -moz-border-radius: 32;
+    border-radius: 32px;
+    font-size: 20px;
+    background: #ffffff;
+    padding: 10px 20px 10px 20px;
+    border: solid #000000 3px;
+    text-decoration: none;
+  }
+  
+  .button-action-admin:hover {
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #0d8ade);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #0d8ade);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #0d8ade);
+    background-image: -o-linear-gradient(top, #3cb0fd, #0d8ade);
+    background-image: linear-gradient(to bottom, #3cb0fd, #0d8ade);
+    text-decoration: none;
+  }
+
+.title-content-admin {
+    margin-top: 1em;
+}
+
+.table-button-action {
+    display: flex;
+    justify-content:space-evenly ;
+}
+
+.button-change-admin {
+    -webkit-border-radius: 32;
+    -moz-border-radius: 32;
+    border-radius: 32px;
+    color: #333333  ;
+    background: #19ee15;
+    padding: 5px 10px 5px 10px;
+    border: solid #000000 3px;
+    text-decoration: none;
+  }
+
+.button-change-admin:hover {
+    transform: scale(1.5);
+  }
+
+.button-supp-admin {
+    -webkit-border-radius: 32;
+    -moz-border-radius: 32;
+    border-radius: 32px;
+    color: #ffffff;
+    background: #ff1f1f;
+    padding: 5px 10px 5px 10px;
+    border: solid #000000 3px;
+    text-decoration: none;
+  }
+
+.button-supp-admin:hover {
+    transform: scale(1.5);
+  }
+
+.button-add-admin {
+    -webkit-border-radius: 32;
+    -moz-border-radius: 32;
+    border-radius: 32px;
+    color: #000000;
+    background: #0277f4;
+    padding: 5px 10px 5px 10px;
+    border: solid #000000 3px;
+    text-decoration: none;
+}
+
+.button-add-admin:hover {
+    transform: scale(1.5);
+}
+
+@media only screen and (max-width: 950px) {
+    .table-button-action {
+      display: flex;
+      flex-direction: column ;
+    }
+    .button-change-admin {
+        margin-bottom: 5px;
+    }
+  }
+
+  .back-to-admin {
+    padding-top: 1em;
+  }
