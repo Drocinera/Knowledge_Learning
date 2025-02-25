@@ -39,7 +39,7 @@
                     <td class="table-case-content">{{ theme.name }}</td>
                     <td class="table-case-content">{{ theme.description }}</td>
                     <td class="table-button-action">
-                        <a class="button-change-admin" href="{{ path('app_admin_edit_theme', {id: theme.id}) }}">Modifier</a>
+                        <a class="button-edit-admin" href="{{ path('app_admin_edit_theme', {id: theme.id}) }}">Modifier</a>
                         <a class="button-supp-admin" href="{{ path('app_admin_delete', { type: 'theme', id: theme.id }) }}" 
                             onclick="return confirm('Supprimer ce thème ?');">
                             Supprimer
@@ -71,7 +71,7 @@
                     <td>{{ course.name }}</td>
                     <td>{{ course.theme.name }}</td>
                     <td class="table-button-action">
-                        <a class="button-change-admin" href="{{ path('app_admin_edit_course', {id: course.id}) }}">Modifier</a>
+                        <a class="button-edit-admin" href="{{ path('app_admin_edit_course', {id: course.id}) }}">Modifier</a>
                         <a class="button-supp-admin" href="{{ path('app_admin_delete', { type: 'course', id: course.id }) }}" 
                             onclick="return confirm('Supprimer ce cursus ?');">
                             Supprimer
@@ -103,7 +103,7 @@
                     <td>{{ lesson.name }}</td>
                     <td>{{ lesson.course.name }}</td>
                     <td class="table-button-action">
-                        <a class="button-change-admin" href="{{ path('app_admin_edit_lesson', {id: lesson.id}) }}">Modifier</a>
+                        <a class="button-edit-admin" href="{{ path('app_admin_edit_lesson', {id: lesson.id}) }}">Modifier</a>
                         <a class="button-supp-admin" href="{{ path('app_admin_delete', { type: 'lesson', id: lesson.id }) }}" 
                             onclick="return confirm('Supprimer cette leçon ?');">
                             Supprimer

@@ -3,8 +3,8 @@
 {% block title %}Gérer les utilisateurs{% endblock %}
 
 {% block body %}
-    <h1>Gérer les utilisateurs</h1>
-    <a href="{{ path('app_admin_add_user') }}" class="btn btn-success">Ajouter un utilisateur</a>
+    <h1 class="mb-3">Gérer les utilisateurs</h1>
+    <a class="button-add-admin" href="{{ path('app_admin_add_user') }}" class="btn btn-success">Ajouter un utilisateur</a>
     <table class="table">
         <thead>
             <tr>
@@ -20,11 +20,11 @@
                     <td>{{ user.id }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.roles|join(', ') }}</td>
-                    <td>
-                        <a href="{{ path('app_admin_edit_user', {'id': user.id}) }}" class="btn btn-warning">Modifier</a>
+                    <td class="table-button-action">
+                        <a class="button-edit-admin" href="{{ path('app_admin_edit_user', {'id': user.id}) }}" class="btn btn-warning">Modifier</a>
                         <form method="post" action="{{ path('app_admin_delete_user', {'id': user.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
                         <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                        <button class="button-supp-admin" type="submit" class="btn btn-danger">Supprimer</button>
                     </form>
                     </td>
                 </tr>
