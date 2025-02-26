@@ -1,4 +1,6 @@
-.table {
+/* Main Admin */
+
+.table, table {
   margin-top: 1em;
   margin-left: 1em;
   margin-right: 1em;
@@ -34,6 +36,7 @@
     text-decoration: none;
   }
 
+  /* Table Admin */
 .title-content-admin {
     margin-top: 2em;
 }
@@ -100,4 +103,60 @@
 
   .back-to-admin {
     padding-top: 1em;
+  }
+
+  /* User admin */
+
+  .div-mail-user, .div-role-user, .div-password-user, .div-checkbox-user {
+
+  padding: 0.5em 0 0.5em 0.5em;
+  
+  }
+
+.submit-button {
+    position: relative;
+    margin: 0 0 1em 1em;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    border: 2px solid #00c2cb;
+    background-color: #0277f4;
+    cursor: pointer;
+    outline: none;
+    transition: 200ms;
+  }
+
+  .submit-button:focus {
+    color: transparent;
+    outline: none;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    padding: 25px 25px;
+    border-left: 2px solid #00c2cb;
+    animation: spin 2s 500ms forwards;
+  }
+  button:focus i {
+    animation: check 300ms 2250ms forwards;
+  }
+  
+  @keyframes spin {
+    80% {
+      border: 2px solid transparent;
+      border-left: 2px solid #00c2cb;
+    }
+    100% {
+      transform: rotate(720deg);
+      border: 2px solid #00c2cb;
+    }
+  }
+  
+  @keyframes check {
+    to {
+      color: #00c2cb;
+    }
   }
