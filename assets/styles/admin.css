@@ -36,6 +36,7 @@
     text-decoration: none;
   }
 
+
   /* Table Admin */
 .title-content-admin {
     margin-top: 2em;
@@ -159,4 +160,41 @@
     to {
       color: #00c2cb;
     }
+  }
+
+  /* Theme, Course, Lessons Admin */
+  form {
+  margin-bottom: 1em;
+}
+
+  form div {
+    display: flex;
+    align-items: center;
+    padding: 0 1em 0.5em 0.5em;
+  }
+  form label {
+    padding: 0 1em 0.5em 0.5em;
+  }
+
+  #form_save {
+    -webkit-border-radius: 32;
+    -moz-border-radius: 32;
+    border-radius: 32px;
+    color: #000000;
+    background: linear-gradient(#0277f4, #19ee15) ;
+    padding: 5px 10px 5px 10px;
+    border: solid #000000 3px;
+    text-decoration: none;
+  }
+
+  .back-button {
+    -webkit-border-radius: 32;
+    -moz-border-radius: 32;
+    border-radius: 32px;
+    color: #000000;
+    background-color: #ffffff ;
+    padding: 5px 10px 5px 10px;
+    border: solid #000000 3px;
+    text-decoration: none;
+    margin: 0.5em;
   }
