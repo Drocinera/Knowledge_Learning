@@ -13,6 +13,6 @@
     padding: 1em;
 }
 
-.fa-solid {
-    color: #384050;
-} 
+.img-mail-contact, .img-number-contact {
+    width: 5em;
+}
