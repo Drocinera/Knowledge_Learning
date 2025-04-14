@@ -26,8 +26,30 @@
     <link rel="stylesheet" href="{{ asset('styles/buy.css') }}">
     <link rel="stylesheet" href="{{ asset('styles/site_map.css') }}">
     <link rel="stylesheet" href="{{ asset('styles/legal_information.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/certification.css') }}">
 
 </head>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const burger = document.getElementById('burger-menu');
+        const navMenu = document.getElementById('nav-menu');
+
+        if (burger && navMenu) {
+            burger.addEventListener('click', (event) => {
+                event.stopPropagation();
+                navMenu.classList.toggle('active');
+            });
+
+            navMenu.addEventListener('click', (event) => {
+                event.stopPropagation();
+            });
+
+            document.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        }
+    });
+</script>
 <body>
     <header>
         <nav class="header-nav">
@@ -36,7 +58,12 @@
                     <img src="{{ asset('images/Logo.jpg') }}" alt="Logo" class="logo">
                 </a>
             </div>
-            <div class="header-nav-right">
+
+            <div class="burger-menu" id="burger-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <div class="header-nav-right" id="nav-menu">
                 {% if app.user %}
                     <!-- User is connected -->
                     <a href="{{ path('app_home') }}" class="{% if app.request.get('_route') == 'app_home' %}active{% endif %}">

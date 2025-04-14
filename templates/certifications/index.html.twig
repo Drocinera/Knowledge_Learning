@@ -8,9 +8,9 @@
 {% if certifications is empty %}
     <p>Vous n'avez pas encore obtenu de certification.</p>
 {% else %}
-    <ul>
+    <ul class="list-certification">
         {% for certification in certifications %}
-            <li>
+            <li class="info-certification">
                 <strong>{{ certification.title }} - {{ certification.description }} </strong>
                 (obtenue le {{ certification.dateAwarded|date('d/m/Y') }})
             </li>
