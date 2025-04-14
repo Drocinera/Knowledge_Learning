@@ -39,25 +39,21 @@ table {
     margin-bottom: 20px;
 }
 
-/* Bordures autour du tableau */
 table, th, td {
     border: 1px solid #ddd;
 }
 
-/* Style des en-têtes */
 th {
     background-color: #f2f2f2;
     text-align: left;
     padding: 10px;
 }
 
-/* Style des cellules */
 td {
     padding: 10px;
     text-align: left;
 }
 
-/* Alternance des couleurs des lignes */
 tr:nth-child(even) {
     background-color: #f9f9f9;
 }
@@ -66,7 +62,6 @@ tr:hover {
     background-color: #f1f1f1;
 }
 
-/* Centrer le texte dans certaines colonnes (optionnel) */
 th, td {
     text-align: center;
 }
