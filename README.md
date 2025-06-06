@@ -139,7 +139,7 @@ The Admin page located in the drop-down menu allows:
 - src/Service/: Services like StripeService.
 - templates/: HTML templates with Twig.
 
-## 9. Main features
+## 8. Main features
 
 - E-learning training
 - Purchase, visualization and validation of training
