@@ -20,7 +20,7 @@ class CertificationController extends AbstractController
 {
 
     /**
-     * Renders the main certificationdmin page .
+     * Renders the main certification Admin page .
      *
      * @return Response A response object that redirects or renders a template.
      * 
