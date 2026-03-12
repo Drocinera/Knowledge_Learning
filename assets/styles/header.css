@@ -41,7 +41,7 @@ header {
 .header-nav-right a.active {
     font-weight: bold; 
     text-decoration: underline;
-    color: red;
+    color: darkblue;
 }
 
 .header-nav-right a:hover {

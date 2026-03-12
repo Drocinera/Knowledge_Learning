@@ -38,7 +38,7 @@ footer {
 .footer-nav-right a.active {
     font-weight: bold; 
     text-decoration: underline;
-    color: red;
+    color: darkblue;
 }
 
 .footer-nav-right a:hover {
