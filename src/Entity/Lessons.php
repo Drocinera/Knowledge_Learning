@@ -26,8 +26,8 @@ class Lessons
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $description = null;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $content = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $video_url = null;
@@ -163,21 +163,19 @@ class Lessons
      *
      * @return string|null The lesson description.
      */
-    public function getDescription(): ?string
+    public function getContent(): ?string
     {
-        return $this->description;
+        return $this->content;
     }
-
     /**
      * Sets the description of the lesson.
      *
      * @param string $description The lesson description.
      * @return static The current instance for method chaining.
      */
-    public function setDescription(string $description): static
+    public function setContent(string $content): static
     {
-        $this->description = $description;
-
+        $this->content = $content;
         return $this;
     }
 

@@ -1,6 +1,7 @@
 .lesson-sheet{
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
     gap: 20px;
     padding: 1em;
     justify-content: center;
@@ -16,4 +17,13 @@
     text-align: justify;
     margin-left: 2em;
     margin-right: 2em;
+}
+
+.finish-lesson-div {
+    display: flex;
+    justify-content: center;
+}
+
+.back-button {
+    margin: 1em;
 }
