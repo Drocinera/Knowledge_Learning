@@ -1,21 +1,81 @@
-.cursus-lesson-sheet {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-wrap: wrap;
+/* CONTENEUR GLOBAL */
+.cursus-div {
+    padding: 2em;
+    background-color: #f5f6fa;
 }
 
-.cursus-lesson-sheet > ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* TITRE */
+.cursus-title {
+    text-align: center;
+    margin-bottom: 2em;
 }
 
-.cursus-lesson-card {
-    border: 3px solid black;
+.cursus-title h1 {
+    color: white;
+}
+
+/* LISTE */
+.lesson-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 15px;
+    max-width: 800px;
+    margin: auto;
+}
+
+/* ITEM */
+.lesson-item {
+    width: 100%;
+}
+
+/* CARD */
+.lesson-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5em;
     display: flex;
-    padding: 1em;
-    margin: 0.5em;
-    flex-direction: column;
-    background-color: #384050;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* HOVER */
+.lesson-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+/* TITRE LEÇON */
+.lesson-card h2 {
+    font-size: 1.2em;
+    color: white;
+    margin: 0;
+}
+
+/* BOUTON */
+.btn-access {
+    background: #0074c7;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: 0.2s;
+}
+
+/* HOVER BOUTON */
+.btn-access:hover {
+    background: #00497c;
+}
+
+/* VERSION MOBILE */
+@media (max-width: 600px) {
+    .lesson-card {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
 }

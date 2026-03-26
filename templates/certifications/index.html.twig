@@ -4,18 +4,33 @@
 {% block meta_description %}Page de certification une fois toutes les leçons d'un cursus terminer{% endblock %}
 
 {% block body %}
-<h1>Mes Certifications</h1>
+<h1 class="certification-title">Mes Certifications</h1>
 
 {% if certifications is empty %}
-    <p>Vous n'avez pas encore obtenu de certification.</p>
+    <p class="no-certification">Vous n'avez pas encore obtenu de certification.</p>
 {% else %}
-    <ul class="list-certification">
+    <div class="certification-grid">
         {% for certification in certifications %}
-            <li class="info-certification">
-                <strong>{{ certification.title }} - {{ certification.description }} </strong>
-                (obtenue le {{ certification.dateAwarded|date('d/m/Y') }})
-            </li>
+            <div class="certification-card">
+                
+                <div class="certification-header">
+                    <h2>{{ certification.title }}</h2>
+                </div>
+
+                <p class="certification-description">
+                    {{ certification.description }}
+                </p>
+
+                <p class="certification-date">
+                    Obtenue le {{ certification.dateAwarded|date('d/m/Y') }}
+                </p>
+
+                <div class="certification-badge">
+                    ✔ Certifié
+                </div>
+
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 {% endif %}
 {% endblock %}

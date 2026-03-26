@@ -84,47 +84,98 @@
 /* show formation html*/
 
 .courses-grid {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
-    padding: 1em;
-    justify-content: center;
+    padding: 2em;
 }
 
-.courses-card {
+.course-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 1.5em;
     display: flex;
     flex-direction: column;
-    align-items: space-between;
-    align-items: center;
-    border: solid 2px black;
-    padding: 1em;
+    gap: 1em;
 }
 
-.courses-details {
+.course-header {
     display: flex;
     justify-content: space-between;
-    padding-top: 10px;
-    flex-direction: column;
-}
-
-.price-courses-formation {
-    padding-top: 1em;
-    padding-bottom: 1em;
-}
-
-.lesson-name {
-    background-color: #0074c7 ;
-}
-
-.lesson-list {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    padding-top: 1em;
-    padding-bottom: 1em;
 }
 
-.course-buy-button {
+.course-header h3 {
+    color: white;
+}
+
+.course-price {
+    background: #00497c;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 8px;
+}
+
+.course-action {
     text-align: center;
+}
+
+.btn-access-course {
+    background: #2e7d32;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.btn-buy {
+    background: #cd2c2e;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.lessons {
+    border-top: 1px solid #ddd;
+    padding-top: 1em;
+}
+
+.lesson-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f1f3f6;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.lesson-price {
+    color: #00497c;
+    font-weight: bold;
+}
+
+.btn-access-lesson {
+    background: #0074c7;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.btn-buy-small {
+    background: #cd2c2e;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+
+.info-text {
+    color: gray;
+    font-size: 0.9em;
 }
 

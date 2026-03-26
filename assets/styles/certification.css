@@ -1,4 +1,69 @@
-.info-certification {
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
+/* TITRE */
+.certification-title {
+    text-align: center;
+    margin: 1em 0;
+    color: white;
+}
+
+/* MESSAGE VIDE */
+.no-certification {
+    text-align: center;
+    color: gray;
+    font-style: italic;
+}
+
+/* GRID */
+.certification-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 2em;
+}
+
+/* CARD */
+.certification-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5em;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-left: 6px solid #2e7d32; /* vert = réussite */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: 0.2s;
+}
+
+/* HOVER */
+.certification-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* HEADER */
+.certification-header h2 {
+    color: white;
+    margin: 0;
+}
+
+/* DESCRIPTION */
+.certification-description {
+    color: #384050;
+    font-size: 0.95em;
+}
+
+/* DATE */
+.certification-date {
+    font-size: 0.85em;
+    color: gray;
+}
+
+/* BADGE */
+.certification-badge {
+    margin-top: auto;
+    background: #2e7d32;
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
 }
