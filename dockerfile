@@ -1,29 +1,28 @@
-# Utilise une image PHP avec Apache
 FROM php:8.2-apache
 
-# Installer extensions nécessaires à Symfony
+# Installer dépendances système
 RUN apt-get update && apt-get install -y \
-    git unzip libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql
+    git unzip libpq-dev libpng-dev libjpeg-dev \
+    && docker-php-ext-configure gd --with-jpeg \
+    && docker-php-ext-install pdo pdo_pgsql gd
 
-# Activer mod_rewrite (important pour Symfony)
+# Activer Apache rewrite
 RUN a2enmod rewrite
-
-# Copier le projet
-COPY . /var/www/html
-
-# Définir le dossier public comme racine
-WORKDIR /var/www/html
 
 # Installer Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Copier le projet
+WORKDIR /var/www/html
+COPY . .
+
+# Installer dépendances Symfony
 RUN composer install --no-dev --optimize-autoloader
+
+# Config Apache → dossier public
+RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
 
 # Permissions
 RUN chown -R www-data:www-data /var/www/html/var
-
-# Config Apache pour Symfony
-RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
 
 EXPOSE 80
