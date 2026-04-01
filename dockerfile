@@ -15,6 +15,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Projet
 WORKDIR /var/www/html
 COPY . .
+COPY .env.local.php .env.local.php
 
 # Variables d'environnement
 ENV APP_ENV=prod
