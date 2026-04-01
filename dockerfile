@@ -15,18 +15,22 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Projet
 WORKDIR /var/www/html
 COPY . .
-COPY .env.local.php .env.local.php
 
-# Variables d'environnement
-ENV APP_ENV=prod
-ENV APP_DEBUG=0
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs
 
-# Installer dépendances (SANS scripts)
-RUN composer install --no-dev --optimize-autoloader --no-scripts
+RUN npm install && npm run build
 
-# Lancer Symfony proprement
-RUN php bin/console cache:clear --env=prod
-RUN php bin/console cache:warmup --env=prod
+ENV COMPOSER_ALLOW_SUPERUSER=1
+RUN composer install --no-dev --optimize-autoloader
+
+RUN php bin/console assets:install --env=prod
+
+RUN php bin/console doctrine:migrations:migrate --no-interaction --env=prod
+
+RUN php bin/console cache:clear --env=prod && \
+    php bin/console cache:warmup --env=prod && \
+    php bin/console debug:router --env=prod
 
 # Apache → public
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
@@ -35,3 +39,4 @@ RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available
 RUN chown -R www-data:www-data /var/www/html/var
 
 EXPOSE 80
+
