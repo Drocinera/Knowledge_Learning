@@ -1,4 +1,6 @@
-/var
-/vendor
-/node_modules
 .git
+node_modules
+var/cache
+var/log
+.env
+.env.*
