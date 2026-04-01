@@ -16,6 +16,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 COPY . .
 
+# variables d’environnement
+ENV APP_ENV=prod
+ENV APP_DEBUG=0
+
 # Installer dépendances Symfony
 RUN composer install --no-dev --optimize-autoloader
 
