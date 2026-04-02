@@ -12,6 +12,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 COPY . .
 
+ENV APP_RUNTIME_ENV=prod
 ENV APP_ENV=prod
 ENV APP_DEBUG=0
 
