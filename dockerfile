@@ -36,11 +36,13 @@ RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available
 # Permissions
 RUN mkdir -p var/cache var/log \
     && chown -R www-data:www-data var \
-    && chown -R www-data:www-data /var/www/html
+    && chmod -R 775 var
+RUN chown -R www-data:www-data /var/www/html
 
-CMD php bin/console doctrine:migrations:migrate --no-interaction && apache2-foreground
 
 # Symfony cache
 RUN php bin/console cache:clear --no-warmup
+
+CMD php bin/console doctrine:migrations:migrate --no-interaction && apache2-foreground
 
 EXPOSE 80
