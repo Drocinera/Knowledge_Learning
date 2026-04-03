@@ -36,6 +36,13 @@ when@test:
 
 when@prod:
     doctrine:
+        dbal:
+            url: '%env(resolve:DATABASE_URL)%'
+            driver: 'pdo_pgsql'
+            server_version: '15' # version standard Render (important)
+
+            profiling_collect_backtrace: '%kernel.debug%'
+            use_savepoints: true
         orm:
             auto_generate_proxy_classes: false
             proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
