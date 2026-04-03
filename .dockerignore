@@ -1,6 +1,8 @@
 .git
+.gitignore
 node_modules
 var/cache
 var/log
-.env
-.env.*
+vendor
+docker-compose.yml
+README.md
