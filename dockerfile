@@ -38,6 +38,5 @@ ENV APP_DEBUG=0
 # Apache config
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
 
-CMD ["sh", "-c", "php bin/console doctrine:migrations:migrate --no-interaction && apache2-foreground"]
-
+CMD ["sh", "-c", " until php -r 'try { new PDO(\"pgsql:host=$DATABASE_HOST;dbname=$DATABASE_NAME\", \"$DATABASE_USER\", \"$DATABASE_PASSWORD\"); echo \"DB OK\"; } catch (Exception $e) { exit(1); }'; do   echo 'Waiting for database...';  sleep 2; done; php bin/console doctrine:migrations:migrate --no-interaction && php bin/console doctrine:fixtures:load --no-interaction && apache2-foreground "]
 EXPOSE 80
