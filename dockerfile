@@ -27,8 +27,9 @@ RUN composer install \
 # Copy project
 COPY . .
 
-CMD chmod -R 777 var \
- && php bin/console doctrine:schema:update --force \
+CMD chown -R www-data:www-data var \
+ && chmod -R 775 var \
+ && php bin/console doctrine:migrations:migrate --no-interaction \
  && php bin/console doctrine:fixtures:load --no-interaction \
  && apache2-foreground
 
