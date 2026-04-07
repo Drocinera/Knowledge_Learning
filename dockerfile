@@ -27,6 +27,11 @@ RUN composer install \
 # Copy project
 COPY . .
 
+CMD chmod -R 777 var \
+ && php bin/console doctrine:schema:update --force \
+ && php bin/console doctrine:fixtures:load --no-interaction \
+ && apache2-foreground
+
 ENV APP_ENV=prod
 ENV APP_DEBUG=0
 
@@ -42,7 +47,5 @@ RUN chown -R www-data:www-data /var/www/html
 
 # Symfony cache
 RUN php bin/console cache:clear --no-warmup
-
-CMD php bin/console doctrine:migrations:migrate --no-interaction && apache2-foreground
 
 EXPOSE 80
