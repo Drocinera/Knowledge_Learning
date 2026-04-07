@@ -27,11 +27,10 @@ RUN composer install \
 # Copy project
 COPY . .
 
-CMD chown -R www-data:www-data var \
- && chmod -R 775 var \
- && php bin/console doctrine:migrations:migrate --no-interaction \
- && php bin/console doctrine:fixtures:load --no-interaction \
- && apache2-foreground
+RUN mkdir -p var/cache var/log \
+    && chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 /var/www/html/var
+
 
 ENV APP_ENV=prod
 ENV APP_DEBUG=0
@@ -39,14 +38,6 @@ ENV APP_DEBUG=0
 # Apache config
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
 
-# Permissions
-RUN mkdir -p var/cache var/log \
-    && chown -R www-data:www-data var \
-    && chmod -R 775 var
-RUN chown -R www-data:www-data /var/www/html
-
-
-# Symfony cache
-RUN php bin/console cache:clear --no-warmup
+CMD ["sh", "-c", "php bin/console doctrine:migrations:migrate --no-interaction && apache2-foreground"]
 
 EXPOSE 80
