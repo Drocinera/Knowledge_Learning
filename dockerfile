@@ -15,28 +15,25 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-# Cache layer
+# Copy composer files and install dependencies
 COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader --no-scripts --no-progress
 
-RUN composer install \
-    --no-dev \
-    --optimize-autoloader \
-    --no-scripts \
-    --no-progress
-
-# Copy project
+# Copy the application
 COPY . .
 
+# Cache & logs
 RUN mkdir -p var/cache var/log \
     && chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/var
 
+# Apache DocumentRoot
+RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
 
 ENV APP_ENV=prod
 ENV APP_DEBUG=0
 
-# Apache config
-RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
+# Wait for DB, migrate, load fixtures, start Apache
+CMD ["sh", "-c", "until php -r 'try { new PDO(\"pgsql:host=$DATABASE_HOST;dbname=$DATABASE_NAME\", \"$DATABASE_USER\", \"$DATABASE_PASSWORD\"); echo \"DB OK\"; } catch (Exception $e) { exit(1); }'; do echo 'Waiting for database...'; sleep 2; done; php bin/console doctrine:migrations:migrate --no-interaction && php bin/console doctrine:fixtures:load --no-interaction && apache2-foreground"]
 
-CMD ["sh", "-c", " until php -r 'try { new PDO(\"pgsql:host=$DATABASE_HOST;dbname=$DATABASE_NAME\", \"$DATABASE_USER\", \"$DATABASE_PASSWORD\"); echo \"DB OK\"; } catch (Exception $e) { exit(1); }'; do   echo 'Waiting for database...';  sleep 2; done; php bin/console doctrine:migrations:migrate --no-interaction && php bin/console doctrine:fixtures:load --no-interaction && apache2-foreground "]
 EXPOSE 80
