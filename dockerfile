@@ -55,6 +55,8 @@ until php bin/console doctrine:query:sql \"SELECT 1\"; do \
   sleep 2; \
 done; \
 echo 'Database ready!'; \
+chown -R www-data:www-data var; \
+chmod -R 775 var; \
 php bin/console doctrine:migrations:migrate --no-interaction || true; \
 apache2-foreground"]
 
