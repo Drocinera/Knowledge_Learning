@@ -46,6 +46,8 @@ RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available
 ENV APP_ENV=prod
 ENV APP_DEBUG=0
 
+RUN ls -la migrations
+
 # ---- Entrypoint (startup script) ----
 CMD ["sh", "-c", "\
 echo 'Waiting for database...'; \
@@ -53,8 +55,8 @@ until php bin/console doctrine:query:sql \"SELECT 1\" > /dev/null 2>&1; do \
   sleep 2; \
 done; \
 echo 'Database ready!'; \
-php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration; \
 php bin/console cache:clear --env=prod; \
+php bin/console doctrine:migrations:migrate --no-interaction; \
 apache2-foreground"]
 
 
