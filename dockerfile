@@ -48,10 +48,14 @@ ENV APP_DEBUG=0
 
 # ---- Entrypoint (startup script) ----
 CMD ["sh", "-c", "\
-until php -r 'try { new PDO(\"pgsql:host=$DATABASE_HOST;dbname=$DATABASE_NAME\", \"$DATABASE_USER\", \"$DATABASE_PASSWORD\"); echo \"DB OK\"; } catch (Exception $e) { exit(1); }'; \
-do echo 'Waiting for database...'; sleep 2; done; \
+echo 'Waiting for database...'; \
+until php bin/console doctrine:query:sql \"SELECT 1\" > /dev/null 2>&1; do \
+  sleep 2; \
+done; \
+echo 'Database ready!'; \
+php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration; \
 php bin/console cache:clear --env=prod; \
-php bin/console doctrine:migrations:migrate --no-interaction; \
 apache2-foreground"]
+
 
 EXPOSE 80
