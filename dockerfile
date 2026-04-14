@@ -56,6 +56,7 @@ until php bin/console doctrine:query:sql \"SELECT 1\" > /dev/null 2>&1; do \
 done; \
 echo 'Database ready!'; \
 php bin/console cache:clear --env=prod; \
+php bin/console doctrine:schema:update --force; \
 php bin/console doctrine:migrations:migrate --no-interaction; \
 apache2-foreground"]
 
