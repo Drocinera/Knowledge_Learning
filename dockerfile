@@ -51,13 +51,11 @@ RUN ls -la migrations
 # ---- Entrypoint (startup script) ----
 CMD ["sh", "-c", "\
 echo 'Waiting for database...'; \
-until php bin/console doctrine:query:sql \"SELECT 1\" > /dev/null 2>&1; do \
+until php bin/console doctrine:query:sql \"SELECT 1\"; do \
   sleep 2; \
 done; \
 echo 'Database ready!'; \
-php bin/console cache:clear --env=prod; \
-php bin/console doctrine:schema:update --force; \
-php bin/console doctrine:migrations:migrate --no-interaction; \
+php bin/console doctrine:migrations:migrate --no-interaction || true; \
 apache2-foreground"]
 
 
