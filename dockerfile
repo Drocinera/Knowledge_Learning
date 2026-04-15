@@ -15,6 +15,7 @@ RUN echo "opcache.enable=1" >> /usr/local/etc/php/conf.d/opcache.ini \
  && echo "opcache.memory_consumption=128" >> /usr/local/etc/php/conf.d/opcache.ini \
  && echo "opcache.max_accelerated_files=10000" >> /usr/local/etc/php/conf.d/opcache.ini \
  && echo "opcache.validate_timestamps=0" >> /usr/local/etc/php/conf.d/opcache.ini
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # ---- Install Composer ----
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -58,6 +59,8 @@ echo 'Database ready!'; \
 chown -R www-data:www-data var; \
 chmod -R 775 var; \
 php bin/console doctrine:migrations:migrate --no-interaction || true; \
+php bin/console doctrine:fixtures:load --no-interaction; \
+RUN php bin/console asset-map:compile; \
 apache2-foreground"]
 
 
