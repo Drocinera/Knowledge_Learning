@@ -48,6 +48,7 @@ ENV APP_ENV=prod
 ENV APP_DEBUG=0
 
 RUN ls -la migrations
+RUN php bin/console asset-map:compile
 
 # ---- Entrypoint (startup script) ----
 CMD ["sh", "-c", "\
@@ -60,7 +61,6 @@ chown -R www-data:www-data var; \
 chmod -R 775 var; \
 php bin/console doctrine:migrations:migrate --no-interaction || true; \
 php bin/console doctrine:fixtures:load --no-interaction; \
-RUN php bin/console asset-map:compile; \
 apache2-foreground"]
 
 
