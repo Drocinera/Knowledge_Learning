@@ -1,10 +1,9 @@
 <?php
 
-// src/Command/CreateAdminCommand.php
-
 namespace App\Command;
 
 use App\Entity\Users;
+use App\Entity\Role;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -24,17 +23,38 @@ class CreateAdminCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $existing = $this->em->getRepository(Users::class)
-            ->findOneBy(['email' => 'fakeadmin@fakemail.com']);
+        $userRepo = $this->em->getRepository(Users::class);
+        $roleRepo = $this->em->getRepository(Role::class);
 
-        if ($existing) {
+        // 🔍 Vérifie si l'admin existe déjà
+        $existingUser = $userRepo->findOneBy([
+            'email' => 'fakeadmin@fakemail.com'
+        ]);
+
+        if ($existingUser) {
             $output->writeln('Admin already exists.');
             return Command::SUCCESS;
         }
 
+        // 🔍 Vérifie si le rôle existe
+        $role = $roleRepo->findOneBy(['name' => 'ROLE_ADMIN']);
+
+        // 🔥 Création du rôle si absent
+        if (!$role) {
+            $output->writeln('ROLE_ADMIN not found, creating it...');
+
+            $role = new Role();
+            $role->setName('ROLE_ADMIN');
+            $role->setDescription('Administrator');
+
+            $this->em->persist($role);
+            $this->em->flush(); // important pour générer l'id
+        }
+
+        // 👤 Création de l'utilisateur admin
         $user = new Users();
         $user->setEmail('fakeadmin@fakemail.com');
-        $user->setRoles(['ROLE_ADMIN']);
+        $user->setRole($role);
 
         $hashedPassword = $this->passwordHasher->hashPassword($user, 'adminpassword');
         $user->setPassword($hashedPassword);
@@ -42,7 +62,7 @@ class CreateAdminCommand extends Command
         $this->em->persist($user);
         $this->em->flush();
 
-        $output->writeln('Admin created.');
+        $output->writeln('Admin created successfully.');
 
         return Command::SUCCESS;
     }
