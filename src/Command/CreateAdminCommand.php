@@ -4,7 +4,7 @@
 
 namespace App\Command;
 
-use App\Entity\User;
+use App\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -24,7 +24,7 @@ class CreateAdminCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $existing = $this->em->getRepository(User::class)
+        $existing = $this->em->getRepository(Users::class)
             ->findOneBy(['email' => 'fakeadmin@fakemail.com']);
 
         if ($existing) {
@@ -32,7 +32,7 @@ class CreateAdminCommand extends Command
             return Command::SUCCESS;
         }
 
-        $user = new User();
+        $user = new Users();
         $user->setEmail('fakeadmin@fakemail.com');
         $user->setRoles(['ROLE_ADMIN']);
 

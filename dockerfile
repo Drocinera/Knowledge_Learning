@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo pdo_pgsql gd intl opcache \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+    
 # ---- Apache ----
 RUN a2enmod rewrite
 RUN echo '<Directory /var/www/html/public>' >> /etc/apache2/apache2.conf \
@@ -57,6 +58,8 @@ CMD ["sh", "-c", "\
 echo 'Waiting for database...'; \
 until php bin/console dbal:run-sql \"SELECT 1\"; do sleep 2; done; \
 echo 'Database ready!'; \
+chown -R www-data:www-data var; \
+chmod -R 775 var; \
 php bin/console doctrine:migrations:migrate --no-interaction || true; \
 php bin/console app:create-admin || true; \
 apache2-foreground"]
