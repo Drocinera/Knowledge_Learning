@@ -9,6 +9,9 @@ RUN apt-get update && apt-get install -y \
 
 # ---- Apache config ----
 RUN a2enmod rewrite
+RUN echo '<Directory /var/www/html/public>' >> /etc/apache2/apache2.conf \
+ && echo '    AllowOverride All' >> /etc/apache2/apache2.conf \
+ && echo '</Directory>' >> /etc/apache2/apache2.conf
 
 # ---- PHP production config ----
 RUN echo "opcache.enable=1" >> /usr/local/etc/php/conf.d/opcache.ini \
@@ -53,7 +56,7 @@ RUN php bin/console asset-map:compile
 # ---- Entrypoint (startup script) ----
 CMD ["sh", "-c", "\
 echo 'Waiting for database...'; \
-until php bin/console doctrine:query:sql \"SELECT 1\"; do \
+until php bin/console dbal:run-sql \"SELECT 1\"; do \
   sleep 2; \
 done; \
 echo 'Database ready!'; \
