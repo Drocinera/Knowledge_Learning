@@ -12,7 +12,7 @@ use App\Services\PurchaseManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -51,59 +51,69 @@ class StripeController extends AbstractController
      */
 
     #[Route('/checkout/{type}/{id}', name: 'app_stripe_checkout')]
-    public function checkout(
-        string $type,
-        int $id,
-        CoursesRepository $coursesRepository,
-        LessonsRepository $lessonsRepository,
-        StripeService $stripeService,
-        SessionInterface $session
-        
-    ): Response {
-        if ($type === 'course') {
-            $item = $coursesRepository->find($id);
-            $description = 'Cursus : ' . $item->getName();
-            $price = $item->getPrice();
-        } elseif ($type === 'lesson') {
-            $item = $lessonsRepository->find($id);
-            $description = 'Leçon : ' . $item->getName();
-            $price = $item->getPrice();
-        } else {
-            throw $this->createNotFoundException('Type invalide.');
+public function checkout(
+    string $type,
+    int $id,
+    CoursesRepository $coursesRepository,
+    LessonsRepository $lessonsRepository,
+    SessionInterface $session
+): Response {
+    if ($type === 'course') {
+        $item = $coursesRepository->find($id);
+
+        if (!$item) {
+            throw $this->createNotFoundException('Cursus introuvable.');
         }
 
-        if (!$this->getUser()) {
-            throw $this->createAccessDeniedException('Utilisateur non authentifié.');
+        $description = 'Cursus : ' . $item->getName();
+        $price = $item->getPrice();
+
+    } elseif ($type === 'lesson') {
+        $item = $lessonsRepository->find($id);
+
+        if (!$item) {
+            throw $this->createNotFoundException('Leçon introuvable.');
         }
 
-        $session->set('description', $description);
-        $session->set('amount', $price);
+        $description = 'Leçon : ' . $item->getName();
+        $price = $item->getPrice();
 
-        $successUrl = $this->generateUrl('app_payment_success', [], UrlGeneratorInterface::ABSOLUTE_URL);
-        $cancelUrl = $this->generateUrl('app_payment_cancel', [], UrlGeneratorInterface::ABSOLUTE_URL);
-
-        $stripeSession = $stripeService->createCheckoutSession(
-            [
-                [
-                    'price_data' => [
-                        'currency' => 'eur',
-                        'product_data' => ['name' => $description],
-                        'unit_amount' => $price * 100,
-                    ],
-                    'quantity' => 1,
-                ],
-            ],
-            $successUrl,
-            $cancelUrl,
-            [
-                'type' => (string) $type,
-                'userId' => (string) $this->getUser()->getId(),
-                'itemId' => (string) $id,
-            ]
-        );
-
-        return $this->redirect($stripeSession->url);
+    } else {
+        throw $this->createNotFoundException('Type invalide.');
     }
+
+    $user = $this->getUser();
+
+    if (!$user instanceof Users) {
+        throw $this->createAccessDeniedException('Utilisateur non authentifié.');
+    }
+
+    $session->set('description', $description);
+    $session->set('amount', $price);
+
+    $successUrl = $this->generateUrl('app_payment_success', [], UrlGeneratorInterface::ABSOLUTE_URL);
+    $cancelUrl = $this->generateUrl('app_payment_cancel', [], UrlGeneratorInterface::ABSOLUTE_URL);
+
+    $stripeSession = $this->stripeService->createCheckoutSession(
+        [[
+            'price_data' => [
+                'currency' => 'eur',
+                'product_data' => ['name' => $description],
+                'unit_amount' => (int) round($price * 100),
+            ],
+            'quantity' => 1,
+        ]],
+        $successUrl,
+        $cancelUrl,
+        [
+            'type' => $type,
+            'userId' => $user->getId(),
+            'itemId' => $id,
+        ]
+    );
+
+    return $this->redirect($stripeSession->url);
+}
 
     /**
      * Renders the succes payement page with summary information

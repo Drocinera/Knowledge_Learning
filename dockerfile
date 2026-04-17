@@ -67,3 +67,5 @@ php bin/console doctrine:migrations:migrate --no-interaction || true; \
 php bin/console app:create-admin || true; \
 php bin/console debug:router; \
 apache2-foreground"]
+
+EXPOSE 10000
