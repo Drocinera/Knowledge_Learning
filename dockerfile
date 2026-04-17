@@ -61,5 +61,6 @@ echo 'Database ready!'; \
 chown -R www-data:www-data var; \
 chmod -R 775 var; \
 php bin/console doctrine:migrations:migrate --no-interaction || true; \
-php bin/console app:create-admin || true; \
+php bin/console app:create-admin || true; \ 
+php bin/console debug:router;\
 apache2-foreground"]
