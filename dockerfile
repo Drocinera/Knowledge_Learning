@@ -55,12 +55,15 @@ RUN php bin/console asset-map:compile
 
 # ---- Script de démarrage ----
 CMD ["sh", "-c", "\
+sed -i \"s/80/${PORT}/g\" /etc/apache2/ports.conf && \
+sed -i \"s/:80/:${PORT}/g\" /etc/apache2/sites-available/000-default.conf && \
+echo 'Listening on port ${PORT}' && \
 echo 'Waiting for database...'; \
 until php bin/console dbal:run-sql \"SELECT 1\"; do sleep 2; done; \
 echo 'Database ready!'; \
 chown -R www-data:www-data var; \
 chmod -R 775 var; \
 php bin/console doctrine:migrations:migrate --no-interaction || true; \
-php bin/console app:create-admin || true; \ 
-php bin/console debug:router;\
+php bin/console app:create-admin || true; \
+php bin/console debug:router; \
 apache2-foreground"]

@@ -36,8 +36,6 @@ class LoginController extends AbstractController
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
-
-        return $this->redirectToRoute('app_home');
     }
 
     /**
