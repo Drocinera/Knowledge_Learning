@@ -26,10 +26,17 @@ class CreateAdminCommand extends Command
         $userRepo = $this->em->getRepository(Users::class);
         $roleRepo = $this->em->getRepository(Role::class);
 
+        // 🔐 Récupération des variables d’environnement
+        $email = $_ENV['ADMIN_EMAIL'] ?? null;
+        $password = $_ENV['ADMIN_PASSWORD'] ?? null;
+
+        if (!$email || !$password) {
+            $output->writeln('<error>ADMIN_EMAIL ou ADMIN_PASSWORD non définis.</error>');
+            return Command::FAILURE;
+        }
+
         // 🔍 Vérifie si l'admin existe déjà
-        $existingUser = $userRepo->findOneBy([
-            'email' => 'fakeadmin@fakemail.com'
-        ]);
+        $existingUser = $userRepo->findOneBy(['email' => $email]);
 
         if ($existingUser) {
             $output->writeln('Admin already exists.');
@@ -48,21 +55,21 @@ class CreateAdminCommand extends Command
             $role->setDescription('Administrator');
 
             $this->em->persist($role);
-            $this->em->flush(); // important pour générer l'id
+            $this->em->flush();
         }
 
         // 👤 Création de l'utilisateur admin
         $user = new Users();
-        $user->setEmail('fakeadmin@fakemail.com');
+        $user->setEmail($email);
         $user->setRole($role);
 
-        $hashedPassword = $this->passwordHasher->hashPassword($user, 'adminpassword');
+        $hashedPassword = $this->passwordHasher->hashPassword($user, $password);
         $user->setPassword($hashedPassword);
 
         $this->em->persist($user);
         $this->em->flush();
 
-        $output->writeln('Admin created successfully.');
+        $output->writeln('<info>Admin created successfully.</info>');
 
         return Command::SUCCESS;
     }
