@@ -138,6 +138,215 @@ class AdminController extends AbstractController
         ]);
     }
 
+    #[Route('/admin/theme/add', name: 'app_admin_add_theme')]
+public function addTheme(Request $request, EntityManagerInterface $em): Response
+{
+    $theme = new Themes();
+
+    $form = $this->createFormBuilder($theme)
+        ->add('name', TextType::class)
+        ->add('description', TextareaType::class)
+        ->add('image', TextType::class, ['required' => false])
+        ->add('save', SubmitType::class, ['label' => 'Créer'])
+        ->getForm();
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+
+        $theme->setCreatedBy($this->getUser()?->getUserIdentifier() ?? 'system');
+        $theme->setUpdatedBy($this->getUser()?->getUserIdentifier() ?? 'system');
+
+        $em->persist($theme);
+        $em->flush();
+
+        return $this->redirectToRoute('app_admin_content');
+    }
+
+    return $this->render('admin/add_theme.html.twig', [
+        'form' => $form->createView(),
+        'title' => 'Créer un thème'
+    ]);
+}
+
+#[Route('/admin/theme/edit/{id}', name: 'app_admin_edit_theme')]
+public function editTheme(int $id, Request $request, EntityManagerInterface $em): Response
+{
+    $theme = $em->getRepository(Themes::class)->find($id);
+
+    if (!$theme) {
+        throw $this->createNotFoundException();
+    }
+
+    $form = $this->createFormBuilder($theme)
+        ->add('name', TextType::class)
+        ->add('description', TextareaType::class)
+        ->add('image', TextType::class, ['required' => false])
+        ->add('save', SubmitType::class, ['label' => 'Modifier'])
+        ->getForm();
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+
+        $theme->setUpdatedBy($this->getUser()?->getUserIdentifier() ?? 'system');
+        $theme->setUpdatedAt(new \DateTimeImmutable());
+
+        $em->flush();
+
+        return $this->redirectToRoute('app_admin_content');
+    }
+
+    return $this->render('admin/edit_theme.html.twig', [
+        'form' => $form->createView(),
+        'title' => 'Modifier le thème'
+    ]);
+}
+
+#[Route('/admin/course/add', name: 'app_admin_add_course')]
+public function addCourse(Request $request, EntityManagerInterface $em): Response
+{
+    $course = new Courses();
+
+    $form = $this->createFormBuilder($course)
+        ->add('name', TextType::class)
+        ->add('description', TextareaType::class)
+        ->add('price', MoneyType::class)
+        ->add('theme', EntityType::class, [
+            'class' => Themes::class,
+            'choice_label' => 'name'
+        ])
+        ->add('save', SubmitType::class)
+        ->getForm();
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+
+        $course->setCreatedBy($this->getUser()?->getUserIdentifier() ?? 'system');
+        $course->setUpdatedBy($this->getUser()?->getUserIdentifier() ?? 'system');
+
+        $em->persist($course);
+        $em->flush();
+
+        return $this->redirectToRoute('app_admin_content');
+    }
+
+    return $this->render('admin/add_course.html.twig', [
+        'form' => $form->createView()
+    ]);
+}
+
+#[Route('/admin/course/edit/{id}', name: 'app_admin_edit_course')]
+public function editCourse(int $id, Request $request, EntityManagerInterface $em): Response
+{
+    $course = $em->getRepository(Courses::class)->find($id);
+
+    if (!$course) {
+        throw $this->createNotFoundException();
+    }
+
+    $form = $this->createFormBuilder($course)
+        ->add('name', TextType::class)
+        ->add('description', TextareaType::class)
+        ->add('price', MoneyType::class)
+        ->add('theme', EntityType::class, [
+            'class' => Themes::class,
+            'choice_label' => 'name'
+        ])
+        ->add('save', SubmitType::class)
+        ->getForm();
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+
+        $course->setUpdatedBy($this->getUser()?->getUserIdentifier() ?? 'system');
+        $course->setUpdatedAt(new \DateTimeImmutable());
+
+        $em->flush();
+
+        return $this->redirectToRoute('app_admin_content');
+    }
+
+    return $this->render('admin/edit_course.html.twig', [
+        'form' => $form->createView()
+    ]);
+}
+
+#[Route('/admin/lesson/add', name: 'app_admin_add_lesson')]
+public function addLesson(Request $request, EntityManagerInterface $em): Response
+{
+    $lesson = new Lessons();
+
+    $form = $this->createFormBuilder($lesson)
+        ->add('name', TextType::class)
+        ->add('content', TextareaType::class)
+        ->add('video_url', UrlType::class, ['required' => false])
+        ->add('price', MoneyType::class)
+        ->add('course', EntityType::class, [
+            'class' => Courses::class,
+            'choice_label' => 'name'
+        ])
+        ->add('save', SubmitType::class)
+        ->getForm();
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+
+        $lesson->setCreatedBy($this->getUser()?->getUserIdentifier() ?? 'system');
+        $lesson->setUpdatedBy($this->getUser()?->getUserIdentifier() ?? 'system');
+
+        $em->persist($lesson);
+        $em->flush();
+
+        return $this->redirectToRoute('app_admin_content');
+    }
+
+    return $this->render('admin/add_lesson.html.twig', [
+        'form' => $form->createView()
+    ]);
+}
+
+#[Route('/admin/lesson/edit/{id}', name: 'app_admin_edit_lesson')]
+public function editLesson(int $id, Request $request, EntityManagerInterface $em): Response
+{
+    $lesson = $em->getRepository(Lessons::class)->find($id);
+
+    if (!$lesson) {
+        throw $this->createNotFoundException();
+    }
+
+    $form = $this->createFormBuilder($lesson)
+        ->add('name', TextType::class)
+        ->add('content', TextareaType::class)
+        ->add('video_url', UrlType::class, ['required' => false])
+        ->add('price', MoneyType::class)
+        ->add('course', EntityType::class, [
+            'class' => Courses::class,
+            'choice_label' => 'name'
+        ])
+        ->add('save', SubmitType::class)
+        ->getForm();
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+
+        $lesson->setUpdatedBy($this->getUser()?->getUserIdentifier() ?? 'system');
+        $lesson->setUpdatedAt(new \DateTimeImmutable());
+
+        $em->flush();
+
+        return $this->redirectToRoute('app_admin_content');
+    }
+
+    return $this->render('admin/edit_lesson.html.twig', [
+        'form' => $form->createView()
+    ]);
+}
+
     #[Route('/admin/content/delete/{type}/{id}', name: 'app_admin_delete')]
     public function deleteContent(string $type, int $id, EntityManagerInterface $entityManager): Response
     {
