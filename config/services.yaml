@@ -7,6 +7,7 @@ parameters:
     stripe_webhook_secret: '%env(STRIPE_WEBHOOK_SECRET)%'
     stripe_secret_key: '%env(resolve:STRIPE_SECRET_KEY)%'
     images_directory: '%kernel.project_dir%/public/Images'
+    themes_directory: '%kernel.project_dir%/public/uploads/themes'
 
 services:
     App\EventSubscriber\EntitySubscriber:

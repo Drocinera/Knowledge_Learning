@@ -41,6 +41,9 @@ COPY . .
 RUN mkdir -p var/cache var/log \
  && chown -R www-data:www-data /var/www/html \
  && chmod -R 775 var
+RUN mkdir -p public/uploads/themes \
+ && chown -R www-data:www-data public/uploads \
+ && chmod -R 775 public/uploads
 
 # ---- Apache DocumentRoot ----
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf

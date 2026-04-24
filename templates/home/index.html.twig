@@ -33,7 +33,7 @@
             {% for formation in formations %}
                 <div class="formation-card">
                     <div class="formation-image">
-                        <img src="{{ asset('Images/' ~ formation.image) }}" alt="{{ formation.name }}">
+                        <img src="{{ asset('uploads/themes/' ~ formation.image) }}" alt="{{ formation.name }}">
                     </div>
                     <div class="formation-details">
                         <h3>{{ formation.name }}</h3>

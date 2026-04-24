@@ -22,7 +22,10 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 /**
  * AdminController
@@ -139,20 +142,45 @@ class AdminController extends AbstractController
     }
 
     #[Route('/admin/theme/add', name: 'app_admin_add_theme')]
-public function addTheme(Request $request, EntityManagerInterface $em): Response
-{
+public function addTheme(
+    Request $request,
+    EntityManagerInterface $em,
+    SluggerInterface $slugger
+): Response {
     $theme = new Themes();
 
     $form = $this->createFormBuilder($theme)
         ->add('name', TextType::class)
         ->add('description', TextareaType::class)
-        ->add('image', TextType::class, ['required' => false])
+        ->add('imageFile', FileType::class, [
+            'mapped' => false,
+            'required' => false,
+        ])
         ->add('save', SubmitType::class, ['label' => 'Créer'])
         ->getForm();
 
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+
+        $imageFile = $form->get('imageFile')->getData();
+
+        if ($imageFile) {
+            $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename = $slugger->slug($originalFilename);
+            $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+            try {
+                $imageFile->move(
+                    $this->getParameter('themes_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                throw new \Exception('Erreur upload image');
+            }
+
+            $theme->setImage($newFilename);
+        }
 
         $theme->setCreatedBy($this->getUser()?->getUserIdentifier() ?? 'system');
         $theme->setUpdatedBy($this->getUser()?->getUserIdentifier() ?? 'system');
@@ -170,8 +198,12 @@ public function addTheme(Request $request, EntityManagerInterface $em): Response
 }
 
 #[Route('/admin/theme/edit/{id}', name: 'app_admin_edit_theme')]
-public function editTheme(int $id, Request $request, EntityManagerInterface $em): Response
-{
+public function editTheme(
+    int $id,
+    Request $request,
+    EntityManagerInterface $em,
+    SluggerInterface $slugger
+): Response {
     $theme = $em->getRepository(Themes::class)->find($id);
 
     if (!$theme) {
@@ -181,13 +213,40 @@ public function editTheme(int $id, Request $request, EntityManagerInterface $em)
     $form = $this->createFormBuilder($theme)
         ->add('name', TextType::class)
         ->add('description', TextareaType::class)
-        ->add('image', TextType::class, ['required' => false])
+        ->add('imageFile', FileType::class, [
+            'mapped' => false,
+            'required' => false,
+        ])
         ->add('save', SubmitType::class, ['label' => 'Modifier'])
         ->getForm();
 
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+
+        $imageFile = $form->get('imageFile')->getData();
+
+        if ($imageFile) {
+
+            // supprimer ancienne image
+            if ($theme->getImage()) {
+                $oldPath = $this->getParameter('themes_directory').'/'.$theme->getImage();
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+
+            $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename = $slugger->slug($originalFilename);
+            $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+            $imageFile->move(
+                $this->getParameter('themes_directory'),
+                $newFilename
+            );
+
+            $theme->setImage($newFilename);
+        }
 
         $theme->setUpdatedBy($this->getUser()?->getUserIdentifier() ?? 'system');
         $theme->setUpdatedAt(new \DateTimeImmutable());
