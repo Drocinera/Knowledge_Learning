@@ -10,6 +10,7 @@
         "ext-iconv": "*",
         "doctrine/dbal": "^3",
         "doctrine/doctrine-bundle": "^2.13",
+        "doctrine/doctrine-fixtures-bundle": "^4.3",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.3",
         "gregwar/captcha-bundle": "^2.3",
@@ -57,7 +58,6 @@
     },
 
     "require-dev": {
-        "doctrine/doctrine-fixtures-bundle": "*",
         "phpunit/phpunit": "^9.6",
         "symfony/browser-kit": "^7.3",
         "symfony/css-selector": "^7.3",
@@ -102,9 +102,9 @@
 
     "scripts": {
         "auto-scripts": {
-            "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "importmap:install": "symfony-cmd"
+            "cache:clear": "php bin/console cache:clear",
+            "assets:install %PUBLIC_DIR%": "php bin/console assets:install",
+            "importmap:install": "php bin/console importmap:install"
         },
         "post-install-cmd": [
             "@auto-scripts"
