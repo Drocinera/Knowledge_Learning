@@ -33,6 +33,7 @@ RUN composer install \
     --optimize-autoloader \
     --no-scripts \
     --no-progress
+RUN composer require doctrine/doctrine-fixtures-bundle  
 
 # ---- Code source ----
 COPY . .
