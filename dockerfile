@@ -62,6 +62,9 @@ echo \"Listen ${PORT}\" > /etc/apache2/ports.conf && \
 sed -i \"s/:80/:${PORT}/g\" /etc/apache2/sites-available/000-default.conf && \
 chown -R www-data:www-data var; \
 chmod -R 775 var; \
+php bin/console doctrine:database:create --if-not-exists; \
+php bin/console doctrine:migrations:migrate --no-interaction; \
+php bin/console doctrine:fixtures:load --no-interaction; \
 apache2-foreground"]
 
 EXPOSE 10000
