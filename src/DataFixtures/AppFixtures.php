@@ -64,7 +64,7 @@ public function __construct(UserPasswordHasherInterface $passwordHasher)
             $theme1->setUpdatedBy('admin');
             $theme1->setCreatedAt(new \DateTimeImmutable());
             $theme1->setUpdatedAt(new \DateTimeImmutable());
-            $theme1->setImage('Introduction_au_web.jpg');
+            $theme1->setImage('base_de_donnée.jpg');
 
             $theme2 = new Themes();
             $theme2->setName('HTML');
@@ -91,7 +91,7 @@ public function __construct(UserPasswordHasherInterface $passwordHasher)
             $theme4->setUpdatedBy('admin');
             $theme4->setCreatedAt(new \DateTimeImmutable());
             $theme4->setUpdatedAt(new \DateTimeImmutable());
-            $theme4->setImage('Image-JS.jpg');
+            $theme4->setImage('Image-JS.webp');
 
             $manager->persist($theme1);
             $manager->persist($theme2);
